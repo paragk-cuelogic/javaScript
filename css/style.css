@@ -1,0 +1,36 @@
+.fix{
+    clear: both;
+}
+
+body{
+    background-color: darkorange;
+}
+
+#signUpDetails{
+    visibility: visible;
+}
+
+form{
+    background-color: #f1f1f1;
+    width: fit-content;
+    padding: 50px;
+    text-align: center;
+    padding: 10px 50px;
+    width: 550px;
+}
+
+form label{
+    display: block;
+    float: left;
+    margin: 10px 30px;
+}
+
+form fieldset img{
+    margin-right: 50px;
+}
+
+form input, form img, select{
+    display: block;
+    float: right;
+    margin: 10px 30px;
+}

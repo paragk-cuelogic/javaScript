@@ -4,9 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/style.css">
     <title>TO-DO</title>
 </head>
 <body>
+
+<form NAME="signUP" action="" method="GET" aria-disabled="true">
+
+    <h2>User Registration Form</h2>
+
+    <p class="signup-error"></p>
+    <fieldset id="userAvailability">
+        <label for="userName"> User Name :</label>
+        <input type="text" name="userName" value="" id="userName">
+        <div class="fix"></div>
+
+        <label for="email"> Email ID :</label>
+        <input type="text" name="email" value="" id="email" pattern="">
+        <div class="fix"></div>
+
+        <input type="button" value="Check Availability" onclick="checkAvail()">
+        <div class="fix"></div>
+    </fieldset>
+            
+    <fieldset id="signUpDetails">
+        <label for="firstName"> First Name :</label>
+        <input type="text" name="firstName" value="" id="firstName">
+        <div class="fix"></div>
+
+        <label for="lastName"> Last Name :</label>
+        <input type="text" name="lastName" value="" id="lastName">
+        <div class="fix"></div>
+
+        <label for="Gender">Gender : </label>
+        <select name="Gender" form="genderForm" id="gender">
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+        </select>
+        <div class="fix"></div>
+
+        <label for="address"> Address : </label>
+        <textarea name="address" id="address" cols="30" rows="4"></textarea>
+        <div class="fix"></div>
+
+        <label for="getImage"> Upload Profile Picture : </label>
+        <input type="file" id="profilePicture" accept="image/*" name="getImage"
+        onchange="document.getElementById('profileImage')
+        .src = window.URL.createObjectURL(this.files[0])" class="signup-img">
+        <div class="fix"></div>
+        <img id="profileImage" alt="" width="100" height="100" class="signup-img"/>
+        <div class="fix"></div>
+        
+        <input type="submit" value="sigunUP" onclick="signUp()">
+        <input type="reset" value="Reset">
+        <div class="fix"></div>
+        
+    </fieldset>
+</form>
+
+<script src="../script/index.js"></script>
 
 </body>
 </html>
