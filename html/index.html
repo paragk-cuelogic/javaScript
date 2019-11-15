@@ -4,65 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/testStyle.css">
     <title>TO-DO</title>
 </head>
 <body>
 
+<div class="container">
+        <h1>TO-DO App</h1> <hr>
 <form NAME="signUP" action="" method="GET" aria-disabled="true">
 
     <h2>User Registration Form</h2>
 
-    <p class="signup-error"></p>
-    <fieldset id="userAvailability">
-        <label for="userName"> User Name :</label>
-        <input type="text" name="userName" value="" id="userName">
-        <div class="fix"></div>
+        <input type="text" placeholder="Enter User Name" name="userName" value="" id="userName" onchange="checkField(event)" required>
+        <p id="hint userName">
+            Need Help ? <br>
+            Cannot Be Empty
+            Enter 8-50 Characters And/Or Digits
+            No Space
+        </p>
 
-        <label for="email"> Email ID :</label>
-        <input type="text" name="email" value="" id="email" pattern="">
-        <div class="fix"></div>
+        <input type="text" placeholder="Enter Email-id" name="email" value="" id="email" required>
+        <p id="hint userName">
+                Need Help ? <br>
+                Enter Valid Email Address
+        </p>
 
-        <input type="button" value="Check Availability" onclick="checkAvail()">
-        <div class="fix"></div>
-    </fieldset>
-            
-    <fieldset id="signUpDetails">
-        <label for="firstName"> First Name :</label>
-        <input type="text" name="firstName" value="" id="firstName">
-        <div class="fix"></div>
+        <input type="password" placeholder="Enter Password" required>
+        <p id="hint userName">
+                Need Help ? <br>
+                Password Length must be 8-50 Characters
+                No Space
+                Must Consist of atleast One UpperCase & LowerCase Character &
+                Digit & Special Character from(#$@!&%) only.
+        </p>
 
-        <label for="lastName"> Last Name :</label>
-        <input type="text" name="lastName" value="" id="lastName">
-        <div class="fix"></div>
+        <input type="password" placeholder="Confirm Password" required>
+        <p id="hint userName">
+            Need Help ? <br>
+            Re-Enter Password
+        </p>
 
-        <label for="Gender">Gender : </label>
-        <select name="Gender" form="genderForm" id="gender">
+        <input type="text" placeholder="Enter First Name" name="firstName" value="" id="firstName" required>
+        <p id="hint userName">
+            Need Help ? <br>
+            Enter 3-20 alphabates only
+            No Space
+        </p>
+        
+        <input type="text" placeholder="Enter Last Name" name="lastName" value="" id="lastName" required>
+        <p id="hint userName">
+                Need Help ? <br>
+                Enter 3-20 alphabates only
+                No Space
+        </p>
+
+        <select name="Gender" form="genderForm" id="gender" required>
+                <option selected disabled>Gender</option>    
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
                 <option value="Other">Other</option>
         </select>
-        <div class="fix"></div>
 
-        <label for="address"> Address : </label>
-        <textarea name="address" id="address" cols="30" rows="4"></textarea>
-        <div class="fix"></div>
+        <p id="hint userName">
+                Need Help ? <br>
+                Select Your Gender
+        </p>
 
-        <label for="getImage"> Upload Profile Picture : </label>
-        <input type="file" id="profilePicture" accept="image/*" name="getImage"
-        onchange="document.getElementById('profileImage')
-        .src = window.URL.createObjectURL(this.files[0])" class="signup-img">
-        <div class="fix"></div>
-        <img id="profileImage" alt="" width="100" height="100" class="signup-img"/>
-        <div class="fix"></div>
+        <textarea name="address" placeholder="Enter Address" style="resize: none;" id="address" cols="30" rows="4" required></textarea>
+        <p id="hint userName">
+                Need Help ? <br>
+                Provide Your Local Address.
+        </p>
+
+        <h2> Upload Profile Picture : </h2>
+        
+        <input  type="file" id="profilePicture" accept="image/*" name="getImage"
+        onchange="document.getElementById('userImage')
+        .src = window.URL.createObjectURL(this.files[0])" required>
+        <p id="hint">
+            Need Help ? <br>
+            Select Image For Your Profile.
+        </p>
+
+        <img id="userImage" alt="" width="100" height="100" class="signup-img"/>
+    <br>
         
         <input type="submit" value="sigunUP" onclick="signUp()">
         <input type="reset" value="Reset">
-        <div class="fix"></div>
-        
-    </fieldset>
-</form>
 
+</form>
+</div>
 <script src="../script/index.js"></script>
 
 </body>

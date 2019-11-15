@@ -9,6 +9,16 @@ function checkAvail(){
     }
 }
 
+function checkField(event){
+
+    let target = event.target;
+    let value = event.target.value;
+    let type = event.type;
+    console.log(event)
+    console.log(target+"  "+value+"  "+type)
+
+}
+
 function signUp(){
     let obj = {};
     let userName = document.getElementById('userName').value;
@@ -18,18 +28,19 @@ function signUp(){
     let gender = document.getElementById('gender').value;
     let address = document.getElementById('address').value;
     let profilePicture = document.getElementById('profilePicture').value;
-
+    
+    
     obj.userName = userName;
     obj.email = email;
     obj.firstName = firstName;
     obj.lastName = lastName;
     obj.gender = gender;
     obj.address = address;
-    obj.profilePicture = profilePicture;
+    obj.userImage = userImage;
 
     console.log(obj)
 
-   // localStorage.setItem(obj.userName, JSON.stringify(obj))
+   localStorage.setItem(obj.userName, JSON.stringify(obj))
 
     let exe = "\nUser Name : "+userName+
     "\nEmail : "+email+
