@@ -4,9 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/tasks.css">
     <title>Document</title>
 </head>
 <body>
-    
+        <!-- Date category markdone isReminder reminderDate isPublic attach file -->
+    <div class="container">
+        <h1> TO-Do App</h1>
+        <h2>Adding New Item To List</h2>
+        
+        <p>Title</p>
+        <input id="title" type="text" placeholder="Title">
+
+        <p>content</p>
+        <textarea style="resize: none;" name="task" id="task" cols="30" rows="5" placeholder="Content"></textarea>
+        
+        <p>category</p>
+        <select id="category" name="Gender" form="category" required>
+                <option value="Home">Home</option>
+                <option value="School">School</option>
+                <option value="Market">Market</option>
+        </select>
+        
+        <p>Due Date</p>
+        <input id="DueDate" type="date">
+        
+        <p>Set Reminder</p>
+        <input type="radio" name="reminder" value="yes">Yes
+        <input type="radio" name="reminder" value="no">No
+        
+        <p>Set Reminder Date</p>
+        <input id="reminderDate" type="date">
+        
+        <p>Is Public</p>
+        <input type="radio" name="public" value="yes">Yes
+        <input type="radio" name="public" value="no">No
+        
+        <p>Attach File</p>
+        <input id="AttchFile" type="file" multiple>
+        <br>
+        <hr>
+        <input id="addTask" type="button" onclick="addNewTask()" name="Add" value="Add to List">
+        <input id="saveTask" style="display: none;" type="button" onclick="saveTask()" name="Add" value="Save Changes">
+        <input type="button"  onclick="location.assign('dashboard.html')" name="Add" value="Cancel & Go Back">
+    </div>
+       <script src="../script/tasks.js"></script>
 </body>
 </html>

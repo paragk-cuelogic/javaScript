@@ -15,6 +15,8 @@ h2{
     box-shadow: 1px 1px 8px black;
 }
 
+
+
 .tasks span{
     /* text-align: center; */
     display: inline-block;
@@ -44,12 +46,50 @@ h2{
     background-color: rgb(175, 123, 63);
 }
 
-.check{
+ul li input{
     height: 15px;
     width: 15px;
     background-color: white;
     border-color: black;
     margin: 20px 20px;
+}
+
+
+ul li span:nth-child(2){
+    background-color: seagreen;
+    height: 15px;
+    width: 50px;
+    margin: 20px 20px;
+}
+
+
+ul li span:nth-child(3){
+    width: 80px;
+    padding: 20px 20px;
+}
+
+ul li div{
+    display: inline-block;
+}
+
+ul li span:nth-child(4){
+    text-align: center;
+    width: 80px;
+    padding: 20px 20px;
+}
+
+ul li span:nth-child(5){
+    width: 150px;
+    padding: 20px 20px;
+}
+
+ul li span:nth-child(6){
+    padding: 20px 20px;
+}
+
+
+ul li span:nth-child(7){
+    padding: 20px 20px;
 }
 
 ul{
@@ -62,32 +102,24 @@ p{
     color: blanchedalmond;
     font-weight: bold;
     background-color: rgb(180, 122, 112);
-    margin: 25px auto 2px;
 }
 
-.Status{
-    background-color: seagreen;
-    height: 15px;
-    width: 50px;
-    margin: 20px 20px;
+ul li p{
+    background-color: brown;
+    padding: 20px 40px;
+    margin: 0px;
 }
 
 p.Status{
     background-color: fc6603;
 }
 
-.category{
-    width: 80px;
-    padding: 20px 20px;
+ul li{
+    height: 76px;
+    overflow: hidden;
 }
 
-.due-date{
-    text-align: center;
-    width: 80px;
-    padding: 20px 20px;
-}
-
-.title{
-    width: 270px;
-    padding: 20px 20px;
+ul li:hover{
+    height: auto;
+    overflow: auto;
 }

@@ -7,20 +7,21 @@
     <link rel="stylesheet" href="../css/dashboard.css">
     <title>Welcome</title>
 </head>
-<body>
 
+<body>
         <div class="tasks">
                 <div class="menu">
                 <p style="float: right;">
-                    <span>Profile</span>
-                    <span>Logout</span>
+                    <span id="profile" onclick="location.assign('profile.html')">Profile</span>
+                    <span id="logout" onclick="logout()">Logout</span>
                 </p></div><div style="clear: both;"></div>
             <h2>TO-Do App</h2>
             <hr>
             <div class="menu">
 
             <p>
-                <span style="float: right;">Add New</span>
+                <span style="float: right;" onclick="location.assign('task.html')">Add New</span>
+                <input style="display: inline-block; margin: 22px; font-size: 20px;" type="search" name="search" onchange="search(this)" id="search">
                 <span style="float: left;">Delete Selected</span>
             </p>
             <div style="clear: both;"></div>
@@ -33,127 +34,8 @@
                 <span class="title">Title</span>
                 <span class="due-date">Due Date</span>
             </p>
-            <ul>    
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
-                <li>
-                    <span class="check"></span>
-                    <span class="Status"></span>
-                    <span class="category">fsdf</span>
-                    <span class="title"> TO - DO  1 </span>
-                    <span class="due-date">28<br />March 2018</span>
-                </li>
-
+            <ul id="todolist">    
+            
             </ul>       
         </div>
 

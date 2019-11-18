@@ -4,58 +4,57 @@
         location.assign('dashboard.html');
 })();
 
-let userIndex = -1;
+userName = "";
 
 function checkUser(){
-    
     let email = document.getElementById("email");
-
-    if(window.confirm("Do You Want To SignUp?"))
-        location.replace("index.html");
-
+    let signup = document.getElementById('checkUserButton');
     let flag = false;
-    let userData = JSON.parse(localStorage.getItem('users'));
+
+    let userData = JSON.parse(localStorage.getItem('users')) || [];
+    if(email.value == "")
+    {
+        signUp();
+    }
+
+    if(userData != ""){
     for(let i=0; i < userData.emailId.length; i++){
         if(userData.emailId[i] == email.value || userData.userNames[i] == email.value){
-            
             flag = true;
+            
+           setDetails(userData.userNames[i]);
+
             let passwordDiv = document.getElementById("passwordDiv");
             email.disabled = true;
+            signup.style.display = "none";
             passwordDiv.style = "display:block";
-            let userImage =  localStorage.getItem(localStorage.getItem('userData'));
-            document.getElementById()
             break;
         }
     }
     if(flag == false){
         if(window.confirm("Do You Want To SignUp?")){
-            console.log("Inside");
-            location.replace("index.html");
+            signUp();
         }
     }
+    }else
+       signUp();
 }
 
+function setDetails(userName){
+    this.userName = userName;
+}
 
 function authenticateUser(){
-    let password = document.getElementById('password');
+    let userData = JSON.parse(localStorage.getItem(userName));
+    let password = document.getElementById('password').value;
+    if( password == userData.password)
+    {
+        sessionStorage.setItem('activeUser',userName);
+        location.assign('dashboard.html');
+    }
 }
 
 function signUp(){
-    location.replace("index.html");
-}
-
-function validateUserName(elementId, showError){
-    let userText = elementId.value;
-    let userNamePattern = null;
-    let emailPattern = /^[a-zA-z]{3,15}$/;
-    
-    if((userText.match(pattern)) || (userText == "")){
-    document.getElementById(showError).innerHTML = "";
-    return true;
-    }else{
-    document.getElementById(showError).innerHTML= "Should only have characters(atleast 3)!!";
-    elementId.value="";
-    elementId.focus();
-    return false;
-    }
+    console.log("redirecting to signup page");
+    location.replace("signup.html");
 }

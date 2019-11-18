@@ -13,7 +13,6 @@ function checkUser(userName){
         if((userName.value).match(mailformat))
             checkEmail(userName);
         else{
-            userName.style = "background-color:red";
             alert("Invalid Email");
         }
     }else{
@@ -21,7 +20,6 @@ function checkUser(userName){
         if((userName.value).match(usernameRegex))
             checkUserName(userName);
         else{
-            userName.style = "background-color:red";
             alert("User name must contain alphabates and digits only");
         }   
     }
@@ -30,10 +28,10 @@ function checkUser(userName){
 function checkUserName(userName){
     console.log("Inside userName Validator");
     name = userName.value;
-    let users = JSON.parse(localStorage.getItem('users')||[]);
+    let users = JSON.parse(localStorage.getItem('users'))||[];
     if(users != ""){
-        for(let i = 0; i < users.userName.length; i++){
-            if(users.userName[i] == name){
+        for(let i = 0; i < users.userNames.length; i++){
+            if(users.userNames[i] == name){
                 validUserName = false;
                 userName.style = "background-color:red";
                 break;
@@ -48,10 +46,10 @@ function checkUserName(userName){
 function checkEmail(email){
     console.log("Inside checkEmail()");
     name = email.value;
-    let users = JSON.parse(localStorage.getItem('users')||[]);
+    let users = JSON.parse(localStorage.getItem('users'))||[];
     if(users != ""){
-        for(let i = 0; i < users.email.length; i++){
-            if(users.email[i] == name){
+        for(let i = 0; i < users.emailId.length; i++){
+            if(users.emailId[i] == name){
                 email.style = "background-color:red";
                 validEmail = false;
                 break;
@@ -79,12 +77,15 @@ function checkPassword(password, rePassword){
 function confirmPassword(rePassword, password){
     if(validPassword){
         if(rePassword.value == password.value)
-        rePassword.style = "background-color:green";
+            rePassword.style = "background-color:green";
+        else
+            rePassword.style = "background-color:red";
     }else{
         rePassword.style = "background-color:red";
         rePassword.value = "";
         alert("First Enter Password");
     }
+
 }
 
 function checkFirstName(firstName){
@@ -103,43 +104,62 @@ function checkName(name){
 }
 
 function signUp(){
+
+    UploadProfilePicture();
+
     let obj = {};
     let userName = document.getElementById('userName').value;
+    let password = document.getElementById('password').value;
     let email = document.getElementById('email').value;
     let firstName = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
     let gender = document.getElementById('gender').value;
     let address = document.getElementById('address').value;
-    let profilePicture = document.getElementById('profilePicture').value;
-    
-    
+
     obj.userName = userName;
     obj.email = email;
+    obj.password = password;
     obj.firstName = firstName;
     obj.lastName = lastName;
     obj.gender = gender;
     obj.address = address;
-    obj.userImage = userImage;
+    obj.todo = [];
+    obj.toDoId = 0;
+    
+    
+    let picture = sessionStorage.getItem("displayPicture");
+    let users = JSON.parse(localStorage.getItem('users'))||[];
 
-    console.log(obj)
+    obj.userImage = picture;
 
-   localStorage.setItem(obj.userName, JSON.stringify(obj))
+    let userData = {};
+            
+    if(users == ""){
+            userData.userNames = [obj.userName];
+            userData.emailId = [obj.email];
+            localStorage.setItem('users', JSON.stringify(userData));
+    }else{
+        users.userNames.push(obj.userName);
+        users.emailId.push(obj.email);
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+        
+    localStorage.setItem(obj.userName, JSON.stringify(obj))
 
-    let exe = "\nUser Name : "+userName+
-    "\nEmail : "+email+
-    "\nUser Name : "+firstName+
-    "\nUser Name : "+lastName+
-    "\nUser Name : "+gender+
-    "\nUser Name : "+address+
-    "\nUser Name : "+profilePicture;
+    location.assign('index.html');
 
-    console.log(
-        "\nUser Name : "+userName+
-        "\nEmail : "+email+
-        "\nUser Name : "+firstName+
-        "\nUser Name : "+lastName+
-        "\nUser Name : "+gender+
-        "\nUser Name : "+address+
-        "\nUser Name : "+profilePicture
-    )
+}
+
+function UploadProfilePicture() {
+    let Image = document.getElementById("profilePicture").files[0];    
+    let imagereader = new FileReader();
+    imagereader.readAsDataURL(Image);
+    imagereader.onload = function () {
+    let imgdata = imagereader.result;
+    sessionStorage.setItem("displayPicture", imgdata);
+    document.getElementById("userImage").src = sessionStorage.displayPicture;
+    };
+    imagereader.onerror = function (error) {
+        
+    };
 }

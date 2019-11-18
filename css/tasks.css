@@ -1,0 +1,22 @@
+.container{
+    background-color: brown;
+    width: 400px;
+    margin: 20px auto;
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+input, select, textarea, select option{
+    border-radius: 10px;
+    margin: 10px auto 20px;
+    padding: 10px;
+}
+
+input[type = "radio"]{
+    margin: 20px 0px 20px 0px;
+}
+
+p{
+    margin-bottom: 0px;
+}
