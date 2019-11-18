@@ -1,100 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="../css/testStyle.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../css/testStyle.css">
-    <title>TO-DO</title>
+    <title>Document</title>
 </head>
 <body>
+    <div class="container">
+        <h1>TO-DO App</h1>
+        <img id="userImage" src="../images/image.png" alt="" height="100px" width="100px">
+        <p>Enter Email / UserID</p>
+        <input id="email" type="text">
+        <br><input id="checkUserButton" type="button" value="Login / SignUp" onclick="checkUser()">
 
-<div class="container">
-        <h1>TO-DO App</h1> <hr>
-<form NAME="signUP" action="" method="GET" aria-disabled="true">
+    <div id="passwordDiv">
+        <p>Enter Password</p>
+        <input type="password" name="" id="password"> <br>
+        <br><input id="checkUserButton" type="button" value="Login / SignUp" onclick="authenticateUser()">
+    </div>
 
-    <h2>User Registration Form</h2>
-
-        <input type="text" placeholder="Enter User Name" name="userName" value="" id="userName" onchange="checkField(event)" required>
-        <p id="hint userName">
-            Need Help ? <br>
-            Cannot Be Empty
-            Enter 8-50 Characters And/Or Digits
-            No Space
-        </p>
-
-        <input type="text" placeholder="Enter Email-id" name="email" value="" id="email" required>
-        <p id="hint userName">
-                Need Help ? <br>
-                Enter Valid Email Address
-        </p>
-
-        <input type="password" placeholder="Enter Password" required>
-        <p id="hint userName">
-                Need Help ? <br>
-                Password Length must be 8-50 Characters
-                No Space
-                Must Consist of atleast One UpperCase & LowerCase Character &
-                Digit & Special Character from(#$@!&%) only.
-        </p>
-
-        <input type="password" placeholder="Confirm Password" required>
-        <p id="hint userName">
-            Need Help ? <br>
-            Re-Enter Password
-        </p>
-
-        <input type="text" placeholder="Enter First Name" name="firstName" value="" id="firstName" required>
-        <p id="hint userName">
-            Need Help ? <br>
-            Enter 3-20 alphabates only
-            No Space
-        </p>
-        
-        <input type="text" placeholder="Enter Last Name" name="lastName" value="" id="lastName" required>
-        <p id="hint userName">
-                Need Help ? <br>
-                Enter 3-20 alphabates only
-                No Space
-        </p>
-
-        <select name="Gender" form="genderForm" id="gender" required>
-                <option selected disabled>Gender</option>    
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-                <option value="Other">Other</option>
-        </select>
-
-        <p id="hint userName">
-                Need Help ? <br>
-                Select Your Gender
-        </p>
-
-        <textarea name="address" placeholder="Enter Address" style="resize: none;" id="address" cols="30" rows="4" required></textarea>
-        <p id="hint userName">
-                Need Help ? <br>
-                Provide Your Local Address.
-        </p>
-
-        <h2> Upload Profile Picture : </h2>
-        
-        <input  type="file" id="profilePicture" accept="image/*" name="getImage"
-        onchange="document.getElementById('userImage')
-        .src = window.URL.createObjectURL(this.files[0])" required>
-        <p id="hint">
-            Need Help ? <br>
-            Select Image For Your Profile.
-        </p>
-
-        <img id="userImage" alt="" width="100" height="100" class="signup-img"/>
-    <br>
-        
-        <input type="submit" value="sigunUP" onclick="signUp()">
-        <input type="reset" value="Reset">
-
-</form>
-</div>
-<script src="../script/index.js"></script>
-
+    </div>
+    <script src="../script/testScript.js"></script>
 </body>
 </html>

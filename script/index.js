@@ -1,62 +1,61 @@
-function checkAvail(){
-    let userName = document.getElementById('userName');
-    console.log(userName.value);
-    let userAvailable = false;
-    if(!userAvailable)
-    {
-        // document.getElementById('userAvailability').style.visibility = "hidden";
-        document.getElementById('signUpDetails').style.visibility = "visible";
+(function(){
+    let userName = sessionStorage.getItem('activeUser');
+    if(userName != null)
+        location.assign('dashboard.html');
+})();
+
+let userIndex = -1;
+
+function checkUser(){
+    
+    let email = document.getElementById("email");
+
+    if(window.confirm("Do You Want To SignUp?"))
+        location.replace("index.html");
+
+    let flag = false;
+    let userData = JSON.parse(localStorage.getItem('users'));
+    for(let i=0; i < userData.emailId.length; i++){
+        if(userData.emailId[i] == email.value || userData.userNames[i] == email.value){
+            
+            flag = true;
+            let passwordDiv = document.getElementById("passwordDiv");
+            email.disabled = true;
+            passwordDiv.style = "display:block";
+            let userImage =  localStorage.getItem(localStorage.getItem('userData'));
+            document.getElementById()
+            break;
+        }
+    }
+    if(flag == false){
+        if(window.confirm("Do You Want To SignUp?")){
+            console.log("Inside");
+            location.replace("index.html");
+        }
     }
 }
 
-function checkField(event){
 
-    let target = event.target;
-    let value = event.target.value;
-    let type = event.type;
-    console.log(event)
-    console.log(target+"  "+value+"  "+type)
-
+function authenticateUser(){
+    let password = document.getElementById('password');
 }
 
 function signUp(){
-    let obj = {};
-    let userName = document.getElementById('userName').value;
-    let email = document.getElementById('email').value;
-    let firstName = document.getElementById('firstName').value;
-    let lastName = document.getElementById('lastName').value;
-    let gender = document.getElementById('gender').value;
-    let address = document.getElementById('address').value;
-    let profilePicture = document.getElementById('profilePicture').value;
+    location.replace("index.html");
+}
+
+function validateUserName(elementId, showError){
+    let userText = elementId.value;
+    let userNamePattern = null;
+    let emailPattern = /^[a-zA-z]{3,15}$/;
     
-    
-    obj.userName = userName;
-    obj.email = email;
-    obj.firstName = firstName;
-    obj.lastName = lastName;
-    obj.gender = gender;
-    obj.address = address;
-    obj.userImage = userImage;
-
-    console.log(obj)
-
-   localStorage.setItem(obj.userName, JSON.stringify(obj))
-
-    let exe = "\nUser Name : "+userName+
-    "\nEmail : "+email+
-    "\nUser Name : "+firstName+
-    "\nUser Name : "+lastName+
-    "\nUser Name : "+gender+
-    "\nUser Name : "+address+
-    "\nUser Name : "+profilePicture;
-
-    console.log(
-        "\nUser Name : "+userName+
-        "\nEmail : "+email+
-        "\nUser Name : "+firstName+
-        "\nUser Name : "+lastName+
-        "\nUser Name : "+gender+
-        "\nUser Name : "+address+
-        "\nUser Name : "+profilePicture
-    )
+    if((userText.match(pattern)) || (userText == "")){
+    document.getElementById(showError).innerHTML = "";
+    return true;
+    }else{
+    document.getElementById(showError).innerHTML= "Should only have characters(atleast 3)!!";
+    elementId.value="";
+    elementId.focus();
+    return false;
+    }
 }

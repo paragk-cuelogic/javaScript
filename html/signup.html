@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/testStyle.css">
+    <title>TO-DO</title>
+</head>
+<body>
+
+<div class="container">
+        <h1>TO-DO App</h1> <hr>
+<form NAME="signUP" action="" method="GET">
+
+    <h2>User Registration Form</h2>
+
+        <input id="userName" type="text" placeholder="Enter User Name" 
+        name="userName" value="" onchange="checkUser(this)" required>
+        <p id="hint userName">
+            Need Help ? <br>
+            Cannot Be Empty
+            Enter 8-50 Characters And/Or Digits
+            No Space
+        </p>
+
+        <input id="email" on type="email" placeholder="Enter Email-id" name="email" value=""  
+        onchange="checkUser(this)" required>
+        <p id="hint userName">
+                Need Help ? <br>
+                Enter Valid Email Address
+        </p>
+
+        <input id="password" type="password" placeholder="Enter Password" 
+        onchange="checkPassword(this, document.getElementById('Repassword'))" required>
+        <p id="hint userName">
+                Need Help ? <br>
+                Password Length must be minimum 8 Characters
+                Must Consist of atleast One UpperCase & LowerCase Character &
+                Digit & Special Character from(!@#$%^&*) only.
+        </p>
+
+        <input id="Repassword" type="password" placeholder="Confirm Password" 
+        onchange="confirmPassword(this, document.getElementById('password'))"required>
+        <p id="hint userName">
+            Need Help ? <br>
+            Re-Enter Password
+        </p>
+
+        <input id="firstName" type="text" placeholder="Enter First Name" name="firstName" value="" 
+        onchange="checkFirstName(this)" required>
+        <p id="hint userName">
+            Need Help ? <br>
+            Enter 3-20 alphabates only
+            No Space
+        </p>
+        
+        <input id="lastName" type="text" placeholder="Enter Last Name" name="lastName" value=""
+        onchange="checkLastName(this)" required>
+        <p id="hint userName">
+                Need Help ? <br>
+                Enter 3-20 alphabates only
+                No Space
+        </p>
+
+        <select id="gender" name="Gender" form="genderForm" required>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+        </select>
+
+        <p id="hint userName">
+                Need Help ? <br>
+                Select Your Gender
+        </p>
+
+        <textarea id="address" name="address" placeholder="Enter Address" style="resize: none;" cols="30" rows="4" required></textarea>
+        <p id="hint userName">
+                Need Help ? <br>
+                Provide Your Local Address.
+        </p>
+
+        <h2> Upload Profile Picture : </h2>
+        
+        <input id="profilePicture" type="file" accept="image/*" name="getImage"
+        onchange="document.getElementById('userImage')
+        .src = window.URL.createObjectURL(this.files[0])" required>
+        <p id="hint">
+            Need Help ? <br>
+            Select Image For Your Profile.
+        </p>
+
+        <img id="userImage" alt="" width="100" height="100" class="signup-img"/>
+    <br>
+        
+        <input type="submit" value="sigunUP" onclick="signUp()">
+        <input type="reset" value="Reset">
+
+</form>
+</div>
+<script src="../script/signup.js"></script>
+
+</body>
+</html>
