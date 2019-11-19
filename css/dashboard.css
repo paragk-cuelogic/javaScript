@@ -3,6 +3,10 @@ h2{
     text-align: center;
 }
 
+body{
+    /* font-size: 18px; */
+}
+
 .fix{
     clear: both;
 }
@@ -88,7 +92,6 @@ ul li span:nth-child(5){
 
 ul li span:nth-child(6){
     margin-right: 20px;
-    color: red;
     width: 80px;
 }
 
@@ -141,20 +144,20 @@ ul li:hover{
 
 .tasks > p span:nth-child(1){
     margin-left: 60px;
-    color: red;
+  
 }
 
 .tasks > p span:nth-child(3){
     margin-left: 15px;
-    color: red;
+  
 }
 
 .tasks > p span:nth-child(4){
     margin-left: 15px;
-    color: red;
+  
 }
 
 .tasks > p span:nth-child(5){
     margin-left: 90px;
-    color: red;
+  
 }

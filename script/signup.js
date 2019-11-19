@@ -7,11 +7,6 @@ let validUserName = false,
     updating = false;
     imageChanged = false;
 
-    let signupButton = document.getElementById('signupButton');
-    let resetButton =  document.getElementById('resetButton');
-    let updateButton =  document.getElementById('updateProfile');
-    let resetProfile = document.getElementById('resetProfile');
-
     let userName = document.getElementById('userName');
     let email = document.getElementById('email');
     let password = document.getElementById('password');
@@ -25,6 +20,7 @@ let validUserName = false,
     (function(){
         let user = sessionStorage.getItem('activeUser');
         if(user != null){
+
             updating = true;
             validUserName = true;
             validEmail = true;
@@ -32,11 +28,11 @@ let validUserName = false,
             validRepassword = true;
             validFirstname = true;
             validLastName = true;
-            signupButton.style.display = "none";
-            resetButton.style.display = "none";
-            updateButton.style.display = "inline-block";
-            resetProfile.style.display = "inline-block";
-
+            document.getElementById('signupButton').style.display = "none";
+            document.getElementById('resetButton').style.display = "none";
+            document.getElementById('updateProfile').style.display = "inline-block";
+            document.getElementById('resetProfile').style.display = "inline-block";
+            document.getElementById('goToDashboard').style.display = "block";
             displayProfile();
         }
     })();
