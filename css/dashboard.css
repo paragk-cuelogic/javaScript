@@ -88,6 +88,8 @@ ul li span:nth-child(5){
 
 ul li span:nth-child(6){
     margin-right: 20px;
+    color: red;
+    width: 80px;
 }
 
 ul li span:nth-child(7){
