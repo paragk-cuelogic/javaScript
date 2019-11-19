@@ -21,18 +21,37 @@
 
             <p>
                 <span style="float: right;" onclick="location.assign('task.html')">Add New</span>
-                <input style="display: inline-block; margin: 22px; font-size: 20px;" type="search" name="search" onchange="search(this)" id="search">
+                <input style="display: inline-block; margin: 22px; font-size: 15px;" placeholder="enter keyword & press tab" type="search" name="search" onchange="search(this)" id="search">
                 <span style="float: left;">Delete Selected</span>
+                <select name="catSearch" id="catSearch"  onchange="categorySearch(this)">
+                    <option value="Sel" selected disabled>Select Category</option>
+                    <!-- <option value="Home">Home</option>
+                    <option value="School">School</option>
+                    <option value="Market">Market</option> -->
+                </select>
+                <select name="statusSearch" id="statusSearch"  onchange="statusSearch(this)">
+                    <option value="Sel" selected disabled>Select Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="done">Done</option>
+                </select>
+                <span style="float: right;" onclick="batchMarkDone()">MarkDone</span>
+                <span style="float: right;" onclick="batchDelete()">Delete</span>
             </p>
             <div style="clear: both;"></div>
+
+            <div>
+                <h6>Filter By Date Range</h6>
+                <input type="date" value="2019-12-02" id="fromDate"><br><input type="date" value="2020-01-02" id="toDate"><button onclick="dateSearch()">search</button>
+            </div>
             </div>
             
             <p>
-                <span class="check"></span>
                 <span class="Status" style="background-color: rgb(180, 122, 112);">Status</span>
                 <span class="category">Category</span>
-                <span class="title">Title</span>
                 <span class="due-date">Due Date</span>
+                <span class="title">Title</span>
+                <span class="title">Reminder</span>
+                <span class="title">Visibility</span>
             </p>
             <ul id="todolist">    
             

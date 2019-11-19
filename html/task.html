@@ -14,10 +14,10 @@
         <h2>Adding New Item To List</h2>
         
         <p>Title</p>
-        <input id="title" type="text" placeholder="Title">
+        <input id="title" type="text" placeholder="Title" value="" onfocusout="isEmptyTitle(this)" required>
 
         <p>content</p>
-        <textarea style="resize: none;" name="task" id="task" cols="30" rows="5" placeholder="Content"></textarea>
+        <textarea style="resize: none;" name="task" id="task" cols="30" rows="5" onfocusout="isEmptyContent(this)" placeholder="Content"></textarea>
         
         <p>category</p>
         <select id="category" name="Gender" form="category" required>
@@ -27,21 +27,22 @@
         </select>
         
         <p>Due Date</p>
-        <input id="DueDate" type="date">
+        <input id="DueDate" type="date" onchange="dueDateCheck(this)">
         
         <p>Set Reminder</p>
-        <input type="radio" name="reminder" value="yes">Yes
-        <input type="radio" name="reminder" value="no">No
+        <input type="radio" name="reminder" value="yes" onchange="toggleReminder(true)">Yes
+        <input type="radio" name="reminder" value="no" onchange="toggleReminder(false)" checked>No
         
-        <p>Set Reminder Date</p>
-        <input id="reminderDate" type="date">
+        <div id="reminderDiv" style="display: none;">
+            <p>Set Reminder Date</p>
+            <input id="reminderDate" type="date" onchange="reminderChecker(this)">
+        </div>
+        
         
         <p>Is Public</p>
         <input type="radio" name="public" value="yes">Yes
-        <input type="radio" name="public" value="no">No
+        <input type="radio" name="public" value="no" checked>No
         
-        <p>Attach File</p>
-        <input id="AttchFile" type="file" multiple>
         <br>
         <hr>
         <input id="addTask" type="button" onclick="addNewTask()" name="Add" value="Add to List">

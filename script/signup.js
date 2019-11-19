@@ -145,7 +145,7 @@ function signUp(){
     }
         
     localStorage.setItem(obj.userName, JSON.stringify(obj))
-
+    alert("Register Successfully");
     location.assign('index.html');
 
 }

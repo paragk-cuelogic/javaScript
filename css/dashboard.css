@@ -10,12 +10,10 @@ h2{
     background-color: rgb(138, 86, 77);
     color: white;
     margin: 50px auto;
-    width: 800px;
+    width: 1000px;
     padding: 50px;
     box-shadow: 1px 1px 8px black;
 }
-
-
 
 .tasks span{
     /* text-align: center; */
@@ -51,12 +49,11 @@ ul li input{
     width: 15px;
     background-color: white;
     border-color: black;
-    margin: 20px 20px;
+    margin: 25px 20px 15px;
 }
 
 
 ul li span:nth-child(2){
-    background-color: seagreen;
     height: 15px;
     width: 50px;
     margin: 20px 20px;
@@ -84,19 +81,20 @@ ul li span:nth-child(5){
 }
 
 ul li span:nth-child(6){
-    padding: 20px 20px;
+    margin-right: 20px;
 }
-
 
 ul li span:nth-child(7){
-    padding: 20px 20px;
+    margin: 0px 30px;
 }
 
+ul li div span{
+    padding: 0 10px;
+}
 ul{
     padding: 0px;
     margin: 0px;
 }
-
 
 p{
     color: blanchedalmond;
@@ -115,11 +113,40 @@ p.Status{
 }
 
 ul li{
-    height: 76px;
+    height: 62px;
     overflow: hidden;
 }
 
 ul li:hover{
     height: auto;
     overflow: auto;
+}
+
+.tasks > p{
+}
+
+.tasks > p span{
+    padding: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.tasks > p span:nth-child(1){
+    margin-left: 60px;
+    color: red;
+}
+
+.tasks > p span:nth-child(3){
+    margin-left: 15px;
+    color: red;
+}
+
+.tasks > p span:nth-child(4){
+    margin-left: 15px;
+    color: red;
+}
+
+.tasks > p span:nth-child(5){
+    margin-left: 90px;
+    color: red;
 }
