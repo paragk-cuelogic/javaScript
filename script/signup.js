@@ -4,6 +4,7 @@ let validUserName = false,
     validRepassword = false,
     validFirstname = false,
     validLastName = false,
+    updating = false;
     imageChanged = false;
 
     let signupButton = document.getElementById('signupButton');
@@ -24,7 +25,8 @@ let validUserName = false,
     (function(){
         let user = sessionStorage.getItem('activeUser');
         if(user != null){
-            validUserName = true
+            updating = true;
+            validUserName = true;
             validEmail = true;
             validPassword = true;
             validRepassword = true;
@@ -209,7 +211,8 @@ function profileHelper(isNew){
         userData.lastName = lastName.value;
         userData.gender = gender.value;
         userData.address = address.value;
-        userData.userImage = picture;
+        if(imageChanged)
+            userData.userImage = picture;
         localStorage.setItem(obj.userName, JSON.stringify(userData));
         alert("Profile Updated Successfully");
         location.assign('dashboard.html');
@@ -219,17 +222,21 @@ function profileHelper(isNew){
 function UploadProfilePicture() {
     
     let Image = document.getElementById("profilePicture").files[0];
-    if(Image == null){
+    if(Image == null && updating){
+        imageChanged = false;
+    }else if(!updating && Image == null){
 
-    }else{    
-    let imagereader = new FileReader();
-    imagereader.readAsDataURL(Image);
-    imagereader.onload = function () {
-    let imgdata = imagereader.result;
-    sessionStorage.setItem("displayPicture", imgdata);
-    document.getElementById("userImage").src = sessionStorage.displayPicture;
-    };
-    imagereader.onerror = function (error) {   
-    };
-}
+    }else{
+        imageChanged = true;
+        let imagereader = new FileReader();
+        imagereader.readAsDataURL(Image);
+        imagereader.onload = function () {
+        let imgdata = imagereader.result;
+        sessionStorage.setItem("displayPicture", imgdata);
+        document.getElementById("userImage").src = sessionStorage.displayPicture;
+        };
+        imagereader.onerror = function (error) {   
+        };
+    }
+    
 }
