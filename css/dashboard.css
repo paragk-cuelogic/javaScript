@@ -10,9 +10,15 @@ h2{
     background-color: rgb(138, 86, 77);
     color: white;
     margin: 50px auto;
-    width: 1000px;
+    width: 1050px;
     padding: 50px;
     box-shadow: 1px 1px 8px black;
+}
+
+.showAll{
+    padding: 20px;
+    margin: 20px;
+    background-color: rgb(155, 100, 77);
 }
 
 .tasks span{

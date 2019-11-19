@@ -20,29 +20,28 @@
             <div class="menu">
 
             <p>
-                <span style="float: right;" onclick="location.assign('task.html')">Add New</span>
-                <input style="display: inline-block; margin: 22px; font-size: 15px;" placeholder="enter keyword & press tab" type="search" name="search" onchange="search(this)" id="search">
-                <span style="float: left;">Delete Selected</span>
-                <select name="catSearch" id="catSearch"  onchange="categorySearch(this)">
-                    <option value="Sel" selected disabled>Select Category</option>
-                    <!-- <option value="Home">Home</option>
-                    <option value="School">School</option>
-                    <option value="Market">Market</option> -->
+                <input style="display: inline-block; margin: 22px; font-size: 18px; width: 300px;" placeholder="enter keyword & press tab" type="search" name="search" onchange="search(this)" id="search">
+                <select style="font-size: 17px; padding: 3px;" name="catSearch" id="catSearch"  onchange="categorySearch(this)">
+                   
                 </select>
-                <select name="statusSearch" id="statusSearch"  onchange="statusSearch(this)">
+
+                <select style="font-size: 17px; padding: 3px;" name="statusSearch" id="statusSearch"  onchange="statusSearch(this)">
                     <option value="Sel" selected disabled>Select Status</option>
+                    <option value="All">All</option>
                     <option value="pending">Pending</option>
                     <option value="done">Done</option>
                 </select>
-                <span style="float: right;" onclick="batchMarkDone()">MarkDone</span>
+                <span style="float: right;" onclick="location.assign('task.html')">Add New</span>
+                <span style="float: right;" onclick="batchMarkDone()">Mark Done</span>
                 <span style="float: right;" onclick="batchDelete()">Delete</span>
             </p>
             <div style="clear: both;"></div>
 
-            <div>
-                <h6>Filter By Date Range</h6>
-                <input type="date" value="2019-12-02" id="fromDate"><br><input type="date" value="2020-01-02" id="toDate"><button onclick="dateSearch()">search</button>
+            <div style="display: inline-block">
+                <h6 style="text-align: center; margin: 10px auto;">Filter By Date Range</h6>
+                <br><input type="date" style="font-size: 18px;" value="2019-12-02" id="fromDate"><span style="width: 30px; text-align: center;"> To </span><input type="date" style="font-size: 18px;" value="2020-01-02" id="toDate"><button style="margin: 10px; padding: 10px;" onclick="dateSearch()" >search</button>
             </div>
+            <span class="showAll" onclick="loadToDo()">Show All</span>
             </div>
             
             <p>
@@ -57,7 +56,6 @@
             
             </ul>       
         </div>
-
         <script src="../script/dashboard.js"></script>
 </body>
 </html>

@@ -104,15 +104,20 @@ function reminderChecker(element){
     }
 }
 
-function addNewTask(){
+function addNewTask(isNew){
+    if(isReminder == "yes")
+        validReminder = true;
+    else
+        validReminder = false;
+
     if(validTitle && validContent && validDueDate && validReminder)
-        addTask(true);
+            addTask(isNew);        
     else
         alert("Fill All the details")
 }
 
 function saveTask(){
-    addTask(false);
+    addNewTask(false);
 }
 
 function addTask(newTask){
@@ -134,7 +139,10 @@ function addTask(newTask){
     obj.category = category.value;
     obj.dueDate = dueDate.value;
     obj.isReminder = isReminder;
-    obj.reminderDate = reminderDate.value;
+    if(isReminder == "yes")
+        obj.reminderDate = reminderDate.value;
+    else
+        obj.reminderDate = "";
     obj.isPublic = isPublic;
 
     if(newTask) 

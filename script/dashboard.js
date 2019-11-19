@@ -44,6 +44,10 @@ function search(search){
 
 function categorySearch(search){
     let searchKey = search.value;
+    if(searchKey == "All"){
+        loadToDo();
+        return;
+    }
     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let todo = userData.todo;
     let searchArray = [];
@@ -59,6 +63,10 @@ function categorySearch(search){
 
 function statusSearch(search){
     let searchKey = search.value;
+    if(searchKey == "All"){
+        loadToDo();
+        return;
+    }
     let status = 100;
     if(searchKey == 'pending')
         status = -1;
@@ -162,9 +170,9 @@ function searchByDate(oldDate, newDate){
 
 function displayData(todoList){
 
-    let categories = ['Home','School','Market','Test'];
+    let categories = ['All','Home','School','Market','Test'];
     let selectCategory = document.getElementById('catSearch');
-
+    selectCategory.innerHTML = "<option value=\"Sel\" selected disabled>Select Category</option>";
     for(let i = 0; i < categories.length; i++){
         let option = document.createElement('option');
         option.value = categories[i];

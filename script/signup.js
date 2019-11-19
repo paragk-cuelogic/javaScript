@@ -108,32 +108,24 @@ function signUp(){
     UploadProfilePicture();
 
     let obj = {};
-    let userName = document.getElementById('userName').value;
-    let password = document.getElementById('password').value;
-    let email = document.getElementById('email').value;
-    let firstName = document.getElementById('firstName').value;
-    let lastName = document.getElementById('lastName').value;
-    let gender = document.getElementById('gender').value;
-    let address = document.getElementById('address').value;
 
-    obj.userName = userName;
-    obj.email = email;
-    obj.password = password;
-    obj.firstName = firstName;
-    obj.lastName = lastName;
-    obj.gender = gender;
-    obj.address = address;
+    obj.userName = document.getElementById('userName').value;;
+    obj.email = document.getElementById('email').value;;
+    obj.password = document.getElementById('password').value;
+    obj.firstName = document.getElementById('firstName').value;;
+    obj.lastName = document.getElementById('lastName').value;
+    obj.gender = document.getElementById('gender').value;
+    obj.address = document.getElementById('address').value;
     obj.todo = [];
     obj.toDoId = 0;
     
-    
     let picture = sessionStorage.getItem("displayPicture");
     let users = JSON.parse(localStorage.getItem('users'))||[];
-
+  
     obj.userImage = picture;
-
+ 
     let userData = {};
-            
+      
     if(users == ""){
             userData.userNames = [obj.userName];
             userData.emailId = [obj.email];
@@ -143,7 +135,6 @@ function signUp(){
         users.emailId.push(obj.email);
         localStorage.setItem('users', JSON.stringify(users));
     }
-        
     localStorage.setItem(obj.userName, JSON.stringify(obj))
     alert("Register Successfully");
     location.assign('index.html');
@@ -159,7 +150,6 @@ function UploadProfilePicture() {
     sessionStorage.setItem("displayPicture", imgdata);
     document.getElementById("userImage").src = sessionStorage.displayPicture;
     };
-    imagereader.onerror = function (error) {
-        
+    imagereader.onerror = function (error) {   
     };
 }
