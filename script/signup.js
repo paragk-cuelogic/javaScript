@@ -115,7 +115,10 @@ function checkEmail(email){
 }
 
 function checkPassword(password, rePassword){
+    validRepassword = false;
+    validPassword = false;
     rePassword.value = "";
+
     let passReg = /^.*(?=.{8,})((?=.*[!@#$%^&*]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/g;
     if((password.value).match(passReg)){
         validPassword = true;
@@ -129,7 +132,7 @@ function checkPassword(password, rePassword){
 
 function confirmPassword(rePassword, password){
     validRepassword = false;
-    if(validPassword){
+    if(validPassword){  
         if(rePassword.value == password.value){
             rePassword.style = "background-color:green";
             validRepassword = true;
@@ -200,10 +203,8 @@ function profileHelper(isNew){
             users.userNames.push(obj.userName);
             users.emailId.push(obj.email);
             localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem(obj.userName, JSON.stringify(obj));
         }
-
-        alert("Register Successfully");
+        localStorage.setItem(obj.userName, JSON.stringify(obj));
         location.assign('index.html');
     
     }else{
