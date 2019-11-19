@@ -5,6 +5,7 @@
     let reminderDate = document.getElementById('reminderDate');
     let saveButton = document.getElementById('saveTask');
     let addButton = document.getElementById('addTask');
+    let errormsg = document.getElementById('errormsg');
     editIndex = -1;
 
     let validTitle = false;
@@ -83,38 +84,33 @@ function toggleReminder(value){
 function reminderChecker(element){
     let date = new Date(element.value);
     let today = new Date();
-    let due = document.getElementById('DueDate').value;
+    let temp = document.getElementById('DueDate').value 
+    let due = new Date(temp);
 
     if(validDueDate){
-        if(date < today){
+        if(date < today || date > due){
             validReminder = false;
             element.style = "background-color:red";
-        }else if(date > due){
-            validReminder = false;
-            element.style = "background-color:red";
-        }else{
-            validReminder = true;
-            element.style = "background-color:green";
         }
-    }
-    else{
+        else{
+              validReminder = true;
+              element.style = "background-color:green";
+            }
+    }else{
         validReminder = false;
         element.value = "";
-        alert("select Due Date First");
+        errormsg.innerHTML = "select Due Date First";
     }
 }
-
 function addNewTask(isNew){
     let isReminder = document.querySelector('input[name="reminder"]:checked').value;
-    if(isReminder == "yes")
-        validReminder = false;
-    else
+    if(isReminder = "no")
         validReminder = true;
 
     if(validTitle && validContent && validDueDate && validReminder)
             addTask(isNew);        
     else
-        alert("Fill All the details")
+    errormsg.innerHTML = "Fill All the details";
 }
 
 function saveTask(){
