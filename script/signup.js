@@ -87,7 +87,9 @@ function checkUserName(userName){
                 userName.style = "background-color:green";
             }
         }  
-    }
+    }else{
+        validUserName = true;
+        userName.style = "background-color:green";
 }
 
 function checkEmail(email){
@@ -105,7 +107,9 @@ function checkEmail(email){
                 email.style = "background-color:green";
             }
         }  
-    }
+    }else{
+        validEmail = true;
+        email.style = "background-color:green";
 }
 
 function checkPassword(password, rePassword){
