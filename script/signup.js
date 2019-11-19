@@ -90,6 +90,7 @@ function checkUserName(userName){
     }else{
         validUserName = true;
         userName.style = "background-color:green";
+    }
 }
 
 function checkEmail(email){
@@ -110,6 +111,7 @@ function checkEmail(email){
     }else{
         validEmail = true;
         email.style = "background-color:green";
+    }
 }
 
 function checkPassword(password, rePassword){
