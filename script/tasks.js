@@ -105,10 +105,11 @@ function reminderChecker(element){
 }
 
 function addNewTask(isNew){
+    let isReminder = document.querySelector('input[name="reminder"]:checked').value;
     if(isReminder == "yes")
-        validReminder = true;
-    else
         validReminder = false;
+    else
+        validReminder = true;
 
     if(validTitle && validContent && validDueDate && validReminder)
             addTask(isNew);        
