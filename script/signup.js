@@ -4,8 +4,61 @@ let validUserName = false,
     validRepassword = false,
     validFirstname = false,
     validLastName = false,
-    validAddress = false,
-    validPicture = false;
+    imageChanged = false;
+
+    let signupButton = document.getElementById('signupButton');
+    let resetButton =  document.getElementById('resetButton');
+    let updateButton =  document.getElementById('updateProfile');
+    let resetProfile = document.getElementById('resetProfile');
+
+    let userName = document.getElementById('userName');
+    let email = document.getElementById('email');
+    let password = document.getElementById('password');
+    let rePassword = document.getElementById('Repassword');
+    let firstName = document.getElementById('firstName');
+    let lastName = document.getElementById('lastName');
+    let gender = document.getElementById('gender');
+    let address = document.getElementById('address');
+    let userImage = document.getElementById('userImage');
+
+    (function(){
+        let user = sessionStorage.getItem('activeUser');
+        if(user != null){
+            validUserName = true
+            validEmail = true;
+            validPassword = true;
+            validRepassword = true;
+            validFirstname = true;
+            validLastName = true;
+            signupButton.style.display = "none";
+            resetButton.style.display = "none";
+            updateButton.style.display = "inline-block";
+            resetProfile.style.display = "inline-block";
+
+            displayProfile();
+        }
+    })();
+
+
+function displayProfile(){
+    let user = sessionStorage.getItem('activeUser')
+    let userData = JSON.parse(localStorage.getItem(user));
+    userName.value = user;
+    userName.disabled = true;
+    email.value = userData.email;
+    email.disabled = true;
+    password.value = userData.password;
+    rePassword.value = userData.password;
+    firstName.value = userData.firstName;
+    lastName.value = userData.lastName;
+    gender.value = userData.gender;
+    address.value = userData.address;
+    userImage.src = userData.userImage;
+}
+
+function updateProfile(){
+
+}
 
 function checkUser(userName){
     if(userName.type == "email"){
@@ -103,46 +156,68 @@ function checkName(name){
     return nameReg.test(name)
 }
 
-function signUp(){
+function signUp(isNew){
+    if(validUserName && validEmail && validFirstname && validLastName && validPassword && validRepassword)
+        profileHelper(isNew);
+    else
+        alert('Fill All The Required Details'); 
+}
 
+function profileHelper(isNew){
+    
     UploadProfilePicture();
-
-    let obj = {};
-
-    obj.userName = document.getElementById('userName').value;;
-    obj.email = document.getElementById('email').value;;
-    obj.password = document.getElementById('password').value;
-    obj.firstName = document.getElementById('firstName').value;;
-    obj.lastName = document.getElementById('lastName').value;
-    obj.gender = document.getElementById('gender').value;
-    obj.address = document.getElementById('address').value;
-    obj.todo = [];
-    obj.toDoId = 0;
     
     let picture = sessionStorage.getItem("displayPicture");
-    let users = JSON.parse(localStorage.getItem('users'))||[];
-  
-    obj.userImage = picture;
  
-    let userData = {};
-      
-    if(users == ""){
-            userData.userNames = [obj.userName];
-            userData.emailId = [obj.email];
-            localStorage.setItem('users', JSON.stringify(userData));
-    }else{
-        users.userNames.push(obj.userName);
-        users.emailId.push(obj.email);
-        localStorage.setItem('users', JSON.stringify(users));
-    }
-    localStorage.setItem(obj.userName, JSON.stringify(obj))
-    alert("Register Successfully");
-    location.assign('index.html');
+    let obj = {};
+    obj.userName = userName.value;
+    obj.email = email.value;
+    obj.password = password.value;
+    obj.firstName = firstName.value;
+    obj.lastName = lastName.value;
+    obj.gender = gender.value;
+    obj.address = address.value;
+    obj.userImage = picture;
 
+    if(isNew){
+        obj.todo = [];
+        obj.toDoId = 0;
+        let users = JSON.parse(localStorage.getItem('users'))||[];
+        let userData = {};
+
+        if(users == ""){
+                userData.userNames = [obj.userName];
+                userData.emailId = [obj.email];
+                localStorage.setItem('users', JSON.stringify(userData));
+        }else{
+            users.userNames.push(obj.userName);
+            users.emailId.push(obj.email);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem(obj.userName, JSON.stringify(obj));
+        }
+
+        alert("Register Successfully");
+        location.assign('index.html');
+    
+    }else{
+        let userData = JSON.parse(localStorage.getItem(userName.value))
+        userData.password = password.value;
+        userData.firstName = firstName.value;
+        userData.lastName = lastName.value;
+        userData.gender = gender.value;
+        userData.address = address.value;
+        userData.userImage = picture;
+        localStorage.setItem(obj.userName, JSON.stringify(userData));
+        alert("Profile Updated Successfully");
+        location.assign('dashboard.html');
+    }
 }
 
 function UploadProfilePicture() {
-    let Image = document.getElementById("profilePicture").files[0];    
+    
+    let Image = document.getElementById("profilePicture").files[0];
+    if(Image == null){
+    }else{    
     let imagereader = new FileReader();
     imagereader.readAsDataURL(Image);
     imagereader.onload = function () {
@@ -152,4 +227,5 @@ function UploadProfilePicture() {
     };
     imagereader.onerror = function (error) {   
     };
+}
 }

@@ -84,8 +84,6 @@
         
         <input id="profilePicture" type="file" accept="image/*" name="getImage"
         onchange="UploadProfilePicture()" required>
-        <!-- document.getElementById('userImage')
-        .src = window.URL.createObjectURL(this.files[0]) -->
         <p id="hint">
             Need Help ? <br>
             Select Image For Your Profile.
@@ -94,8 +92,11 @@
         <img id="userImage" alt="" width="100" height="100" class="signup-img"/>
     <br>
         
-        <input type="button" value="sigunUP" onclick="signUp()">
-        <input type="reset" value="Reset">
+        <input type="button" id="signupButton" value="sigunUP" onclick="signUp(true)">
+        <input type="reset" id="resetButton" value="Reset">
+
+        <input type="button" id="updateProfile" style="display: none;" onclick="signUp(false)" value="Update Profile">
+        <input type="button" id="resetProfile" style="display: none;" onclick="displayProfile()" value="Reset Details">
 
 </form>
 </div>

@@ -3,8 +3,7 @@
     if(user == null)
         location.assign('index.html');
 
-    else{
-        
+    else{   
         let userData = JSON.parse(localStorage.getItem(user));
         document.getElementById('firstName').value = userData.firstName;
         document.getElementById('lastName').value = userData.lastName;
@@ -17,6 +16,6 @@
     }
 })();
 
-function enableEdit(){
-    
+function editProfile(){
+    location.assign('signup.html');
 }

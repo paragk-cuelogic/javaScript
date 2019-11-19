@@ -11,6 +11,7 @@ let listItemCount = 0;
 function logout(){
     if(confirm(" Do You Want To Log Out ? ")){
         sessionStorage.removeItem('activeUser');
+        sessionStorage.removeItem('displayPicture');
         location.assign('index.html');
     }
 }
