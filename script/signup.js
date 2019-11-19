@@ -56,10 +56,6 @@ function displayProfile(){
     userImage.src = userData.userImage;
 }
 
-function updateProfile(){
-
-}
-
 function checkUser(userName){
     if(userName.type == "email"){
         let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -128,14 +124,21 @@ function checkPassword(password, rePassword){
 }
 
 function confirmPassword(rePassword, password){
+    validRepassword = false;
     if(validPassword){
-        if(rePassword.value == password.value)
+        if(rePassword.value == password.value){
             rePassword.style = "background-color:green";
-        else
+            validRepassword = true;
+        }
+        else{
             rePassword.style = "background-color:red";
+            validRepassword = false;
+        }
+            
     }else{
         rePassword.style = "background-color:red";
         rePassword.value = "";
+        validRepassword = false;
         alert("First Enter Password");
     }
 
@@ -147,8 +150,8 @@ function checkFirstName(firstName){
 }
 
 function checkLastName(lastName){
-    validFirstname = false;
-    validFirstname = checkName(lastName.value);
+    validLastName = false;
+    validLastName = checkName(lastName.value);
 }
 
 function checkName(name){
@@ -217,6 +220,7 @@ function UploadProfilePicture() {
     
     let Image = document.getElementById("profilePicture").files[0];
     if(Image == null){
+
     }else{    
     let imagereader = new FileReader();
     imagereader.readAsDataURL(Image);
