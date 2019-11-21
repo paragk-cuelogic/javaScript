@@ -29,6 +29,10 @@
             if(userData.todo[i].id == sessionStorage.getItem('editTask')){
                 title.value = userData.todo[i].title;
                 editIndex = i;
+                validTitle = true;
+                validContent = true;
+                validDueDate = true;
+                validReminder = true;
                 task.value = userData.todo[i].task;
                 category.value = userData.todo[i].category;
                 dueDate.value = userData.todo[i].dueDate;
@@ -40,6 +44,7 @@
 })();
 
 function isEmptyTitle(element){
+    validTitle = false;
     if(element.value != ""){
         element.style = "background-color:green";
         validTitle = true;
@@ -51,6 +56,7 @@ function isEmptyTitle(element){
 }
 
 function isEmptyContent(element){
+    validContent = false;
     if(element.value != ""){
         validContent = true;
         element.style = "background-color:green";
@@ -62,6 +68,8 @@ function isEmptyContent(element){
 }
 
 function dueDateCheck(element){
+    validDueDate = false;
+
     let date = new Date(element.value);
     let today = new Date();
 
@@ -88,6 +96,7 @@ function reminderChecker(element){
     let due = new Date(temp);
 
     if(validDueDate){
+        validReminder = false;
         if(date < today || date > due){
             validReminder = false;
             element.style = "background-color:red";
