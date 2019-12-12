@@ -6,6 +6,10 @@ let listItemCount = 0;
     if(userName == null)
         location.assign('index.html');
     loadToDo();
+    let today = new Date();
+    today = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+    document.getElementById('toDate').value = today;
+    document.getElementById('fromDate').value = today;
 })();
 
 function logout(){

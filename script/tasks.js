@@ -21,7 +21,6 @@
     if(sessionStorage.getItem('editTask')){
         console.log(sessionStorage.getItem('editTask'));
         let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-        let index = sessionStorage.getItem('editTask');
         saveButton.style = "display:block";
         addButton.style = "display:none";
 
@@ -40,6 +39,10 @@
                 break;
             }
         }
+    }else{
+        let today = new Date();
+        dueDate.value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        validDueDate = true;
     }        
 })();
 
@@ -48,8 +51,7 @@ function isEmptyTitle(element){
     if(element.value != ""){
         element.style = "background-color:green";
         validTitle = true;
-    }
-    else{
+    }else{
         validTitle = false;
         element.style = "background-color:red";
     }    
@@ -68,7 +70,9 @@ function isEmptyContent(element){
 }
 
 function dueDateCheck(element){
+    toggleReminder(false);
     validDueDate = false;
+    validReminder = false;
 
     let date = new Date(element.value);
     let today = new Date();
@@ -83,10 +87,16 @@ function dueDateCheck(element){
 }
 
 function toggleReminder(value){
-    if(value)
-        document.getElementById('reminderDiv').style = "display:block";
-    else
+    if(value && validDueDate){
+        let today = new Date();
+        reminderDate.value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);    
+        document.getElementById('reminderDiv').style = "display:block";   
+    }else{
+        errormsg.innerHTML = "select valid Due Date First";
+        document.getElementById("falseReminder").checked = "checked";
+        reminderDate.value = "";
         document.getElementById('reminderDiv').style = "display:none";
+    }       
 }
 
 function reminderChecker(element){
@@ -94,9 +104,8 @@ function reminderChecker(element){
     let today = new Date();
     let temp = document.getElementById('DueDate').value 
     let due = new Date(temp);
-
+    validReminder = false;
     if(validDueDate){
-        validReminder = false;
         if(date < today || date > due){
             validReminder = false;
             element.style = "background-color:red";
@@ -107,8 +116,7 @@ function reminderChecker(element){
             }
     }else{
         validReminder = false;
-        element.value = "";
-        errormsg.innerHTML = "select Due Date First";
+        errormsg.innerHTML = "select valid Due Date First";
     }
 }
 function addNewTask(isNew){
