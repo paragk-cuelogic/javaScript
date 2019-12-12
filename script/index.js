@@ -21,9 +21,8 @@ function checkUser(){
     for(let i=0; i < userData.emailId.length; i++){
         if(userData.emailId[i] == email.value || userData.userNames[i] == email.value){
             flag = true;
-            
+    
            setDetails(userData.userNames[i]);
-
             let passwordDiv = document.getElementById("passwordDiv");
             email.disabled = true;
             signup.style.display = "none";
@@ -41,14 +40,15 @@ function checkUser(){
 }
 
 function setDetails(userName){
+    let userData = JSON.parse(localStorage.getItem(userName));
+    document.getElementById("userImage").src = userData.userImage; 
     this.userName = userName;
 }
 
 function authenticateUser(){
     let userData = JSON.parse(localStorage.getItem(userName));
     let password = document.getElementById('password').value;
-    if( password == userData.password)
-    {
+    if( password == userData.password){
         sessionStorage.setItem('activeUser',userName);
         location.assign('dashboard.html');
     }

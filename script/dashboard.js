@@ -25,7 +25,7 @@ function loadToDo(){
     ul.innerHTML = "";
     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let todoList = userData.todo;
-    displayData(todoList);
+    displayData(todoList, todoList.length, todoList.length);
 }
 
 function editTask(id){ 
@@ -44,7 +44,7 @@ function search(search){
     }
     let ul = document.querySelector("ul");
     ul.innerHTML = "";
-    displayData(searchArray);
+    displayData(searchArray, searchArray.length, todo.length);
 }
 
 function categorySearch(search){
@@ -62,7 +62,7 @@ function categorySearch(search){
     }
     let ul = document.querySelector("ul");
     ul.innerHTML = "";
-    displayData(searchArray);
+    displayData(searchArray, searchArray.length, todo.length);
     search.options[0].selected = true;
 }
 
@@ -86,7 +86,7 @@ function statusSearch(search){
     }
     let ul = document.querySelector("ul");
     ul.innerHTML = "";
-    displayData(searchArray);
+    displayData(searchArray, searchArray.length, todo.length);
     search.options[0].selected = true;
 }
 
@@ -170,11 +170,12 @@ function searchByDate(oldDate, newDate){
     }
     let ul = document.querySelector("ul");
     ul.innerHTML = "";
-    displayData(searchArray);
+    displayData(searchArray, searchArray.length, todo.length);
 }
 
-function displayData(todoList){
+function displayData(todoList, result, total){
 
+    document.getElementById('todoCount').innerHTML = "Showing "+result+" out of "+total;
     let categories = ['All','Home','School','Market','Test'];
     let selectCategory = document.getElementById('catSearch');
     selectCategory.innerHTML = "<option value=\"Sel\" selected disabled>Select Category</option>";
