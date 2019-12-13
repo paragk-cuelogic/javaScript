@@ -7,6 +7,9 @@ let listItemCount = 0;
         location.assign('index.html');
     loadToDo();
     let today = new Date();
+    let userData = JSON.parse(localStorage.getItem(userName));
+    if(userData.userImage)
+        document.getElementById("userImage").src = userData.userImage;
     today = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
     document.getElementById('toDate').value = today;
     document.getElementById('fromDate').value = today;
@@ -20,23 +23,30 @@ function logout(){
     }
 }
 
+function editTask(id){ 
+    sessionStorage.setItem('editTask',id);
+    location.replace('task.html');
+}
+
+// Search Operations
+
+function getToDo(){
+    let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    return userData.todo;
+}
+
 function loadToDo(){
     let ul = document.querySelector("ul");
     ul.innerHTML = "";
-    let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-    let todoList = userData.todo;
+    let todoList = getToDo();
     displayData(todoList, todoList.length, todoList.length);
 }
 
-function editTask(id){ 
-    sessionStorage.setItem('editTask',id);
-    location.assign('task.html');
-}
+// Text Search
 
 function search(search){
     let searchKey = search.value;
-    let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-    let todo = userData.todo;
+    let todo = getToDo();
     let searchArray = [];
     for(let i = 0; i < todo.length; i++){
         if((todo[i].task).search(searchKey) > -1 || (todo[i].title).search(searchKey) > -1)
@@ -47,14 +57,15 @@ function search(search){
     displayData(searchArray, searchArray.length, todo.length);
 }
 
+// Category search(Home, School, ... .. ..)
+
 function categorySearch(search){
     let searchKey = search.value;
     if(searchKey == "All"){
         loadToDo();
         return;
     }
-    let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-    let todo = userData.todo;
+    let todo = getToDo();
     let searchArray = [];
     for(let i = 0; i < todo.length; i++){
         if(todo[i].category == searchKey)
@@ -65,6 +76,8 @@ function categorySearch(search){
     displayData(searchArray, searchArray.length, todo.length);
     search.options[0].selected = true;
 }
+
+// Status Search (Pending, Done)
 
 function statusSearch(search){
     let searchKey = search.value;
@@ -77,8 +90,8 @@ function statusSearch(search){
         status = -1;
     else
         status = 10;
-    let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-    let todo = userData.todo;
+    let todo = getToDo();;
+    
     let searchArray = [];
     for(let i = 0; i < todo.length; i++){
         if(todo[i].status === status)
@@ -88,6 +101,34 @@ function statusSearch(search){
     ul.innerHTML = "";
     displayData(searchArray, searchArray.length, todo.length);
     search.options[0].selected = true;
+}
+
+function dateSearch(){
+    let dateOne = new Date(document.getElementById('fromDate').value);
+    let dateTwo = new Date(document.getElementById('toDate').value);
+    let oldDate = dateOne;
+    let newDate = dateTwo;
+    if(dateOne > dateTwo){
+        newDate = dateOne;
+        oldDate = dateTwo;
+    }
+    searchByDate(oldDate, newDate);
+}
+
+// Date Range Search (From yyyy-mm-dd To yyyy-mm-dd)
+
+function searchByDate(oldDate, newDate){
+    let todo = getToDo();;
+    let searchArray = [];
+    for(let i = 0; i < todo.length; i++){
+        let date = new Date(todo[i].dueDate)
+        if(date >= oldDate && date <= newDate)
+            searchArray.push(todo[i]);
+            console.log(todo[i].title);
+    }
+    let ul = document.querySelector("ul");
+    ul.innerHTML = "";
+    displayData(searchArray, searchArray.length, todo.length);
 }
 
 function markDone(element, reLoad){
@@ -139,42 +180,7 @@ function batchDelete(){
     loadToDo();
 }
 
-function dateSearch(){
-    let fromDate = document.getElementById('fromDate');
-    let toDate = document.getElementById('toDate');
-    let dateOne = new Date(fromDate.value);
-    let dateTwo = new Date(toDate.value);
-    let oldDate = 0;
-    let newDate = 0;
-    if(dateOne > dateTwo){
-        newDate = dateOne;
-        oldDate = dateTwo;
-    }
-    else{
-        newDate = dateTwo;
-        oldDate = dateOne;
-    }
-    searchByDate(oldDate, newDate);
-}
-function searchByDate(oldDate, newDate){
-    
-    let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-    let todo = userData.todo;
-    let searchArray = [];
-    
-    for(let i = 0; i < todo.length; i++){
-        let date = new Date(todo[i].dueDate)
-        if(date >= oldDate && date <= newDate)
-            searchArray.push(todo[i]);
-            console.log(todo[i].title);
-    }
-    let ul = document.querySelector("ul");
-    ul.innerHTML = "";
-    displayData(searchArray, searchArray.length, todo.length);
-}
-
 function displayData(todoList, result, total){
-
     document.getElementById('todoCount').innerHTML = "Showing "+result+" out of "+total;
     let categories = ['All','Home','School','Market','Test'];
     let selectCategory = document.getElementById('catSearch');
@@ -208,8 +214,8 @@ function displayData(todoList, result, total){
         dueDate.textContent = todoList[i].dueDate;
         let dueDateColor = new Date(todoList[i].dueDate)
         if(todoList[i].status < 0){
-            markDone.innerHTML = "<span id="+todoList[i].id+" onclick=\"markDone(this.id, true)\" > Mark Done<span>"
-            edit.innerHTML = "<span id="+todoList[i].id+" onclick=\"editTask(this.id)\" >Edit<span>";
+            markDone.innerHTML = "<button id="+todoList[i].id+" onclick=\"markDone(this.id, true)\" > Mark Done</button>"
+            edit.innerHTML = "<button id="+todoList[i].id+" onclick=\"editTask(this.id)\" >Edit</button>";
             if(new Date() > dueDateColor)
                 status.style = "background-color:red";
             else
@@ -223,7 +229,7 @@ function displayData(todoList, result, total){
         else
             publicTodo = "Public";
 
-        deleteTask.innerHTML = "<span id="+todoList[i].id+" onclick=\"deleteTask(this.id, true)\" >Delete<span>";
+        deleteTask.innerHTML = "<button id="+todoList[i].id+" onclick=\"deleteTask(this.id, true)\" >Delete</button>";
         isPublic.innerHTML = publicTodo;
             
         category.textContent = todoList[i].category;

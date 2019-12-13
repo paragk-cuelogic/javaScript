@@ -10,11 +10,15 @@
 
 <body>
         <div class="tasks">
-                <div class="menu">
+            
+            <img id="userImage" onclick="location.assign('profile.html')" src="../images/image.png" alt="" height="100px" width="100px" style="float: left; border-radius: 50%;"> 
+            <div class="menu">
                 <p style="float: right;">
                     <span id="profile" onclick="location.assign('profile.html')">Profile</span>
                     <span id="logout" onclick="logout()">Logout</span>
-                </p></div><div style="clear: both;"></div>
+                </p>
+            </div>
+                <div style="clear: both;"></div>
             <h2>TO-Do App</h2>
             <hr>
             <div class="menu">
@@ -38,11 +42,11 @@
             <div style="clear: both;"></div>
 
             <div style="display: inline-block">
-                <h6 style="text-align: center; margin: 10px auto;">Filter By Date Range</h6>
+                <h6 style="text-align: center; margin: 25px auto 2px; font-size: 15px;">Filter By Date Range</h6>
                 <br><input type="date" style="font-size: 18px;" value="2019-12-02" id="fromDate"><span style="width: 30px; text-align: center;"> To </span><input type="date" style="font-size: 18px;" value="2020-01-02" id="toDate"><button style="margin: 10px; padding: 10px;" onclick="dateSearch()" >search</button>
             </div>
                 <span class="showAll" onclick="loadToDo()">Show All</span>
-                <span id="todoCount"> afsdfsd sdfs fs dfs d</span>
+                
             </div>
             
             <p>
@@ -53,6 +57,7 @@
                 <span class="title">Reminder</span>
                 <span class="title">Visibility</span>
             </p>
+            <p id="todoCount" style="text-align: center; height: 20px; background-color: rgb(165, 96, 64); padding: 10px; line-height: 20px; font-size: 20px;"></p>
             <ul id="todolist"></ul>       
         </div>
         <script src="../script/dashboard.js"></script>

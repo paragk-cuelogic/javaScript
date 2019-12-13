@@ -30,6 +30,7 @@ let validUserName = false,
             validLastName = true;
             document.getElementById('signupButton').style.display = "none";
             document.getElementById('resetButton').style.display = "none";
+            document.getElementById('goToLogin').style.display = "none";
             document.getElementById('updateProfile').style.display = "inline-block";
             document.getElementById('resetProfile').style.display = "inline-block";
             document.getElementById('goToDashboard').style.display = "block";
@@ -179,15 +180,17 @@ function profileHelper(isNew){
     
     let picture = sessionStorage.getItem("displayPicture");
  
-    let obj = {};
-    obj.userName = userName.value;
-    obj.email = email.value;
-    obj.password = password.value;
-    obj.firstName = firstName.value;
-    obj.lastName = lastName.value;
-    obj.gender = gender.value;
-    obj.address = address.value;
-    obj.userImage = picture;
+    let obj = {
+    userName : userName.value,
+    email : email.value,
+    password : password.value,
+    firstName : firstName.value,
+    lastName : lastName.value,
+    gender : gender.value,
+    address : address.value,
+    userImage : picture
+    };
+    
 
     if(isNew){
         obj.todo = [];
@@ -223,23 +226,21 @@ function profileHelper(isNew){
 }
 
 function UploadProfilePicture() {
-    
     let Image = document.getElementById("profilePicture").files[0];
     if(Image == null && updating){
         imageChanged = false;
-    }else if(!updating && Image == null){
-
-    }else{
+    }else if(updating && Image != null){
         imageChanged = true;
         let imagereader = new FileReader();
         imagereader.readAsDataURL(Image);
+        
         imagereader.onload = function () {
         let imgdata = imagereader.result;
         sessionStorage.setItem("displayPicture", imgdata);
         document.getElementById("userImage").src = sessionStorage.displayPicture;
         };
+
         imagereader.onerror = function (error) {   
         };
     }
-    
 }
