@@ -42,9 +42,9 @@ function search(search){
     let searchKey = search.value;
     let todo = getToDo();
     let searchArray = [];
-    for(let i = 0; i < todo.length; i++){
-        if((todo[i].task).search(searchKey) > -1 || (todo[i].title).search(searchKey) > -1)
-            searchArray.push(todo[i]);
+    for(let todoIndex = 0; todoIndex < todo.length; todoIndex++){
+        if((todo[todoIndex].task).search(searchKey) > -1 || (todo[todoIndex].title).search(searchKey) > -1)
+            searchArray.push(todo[todoIndex]);
     }
 
     displayData(searchArray, searchArray.length, todo.length);
@@ -58,9 +58,9 @@ function categorySearch(search){
     }
     let todo = getToDo();
     let searchArray = [];
-    for(let i = 0; i < todo.length; i++){
-        if(todo[i].category == searchKey)
-            searchArray.push(todo[i]);
+    for(let todoIndex = 0; todoIndex < todo.length; todoIndex++){
+        if(todo[todoIndex].category == searchKey)
+            searchArray.push(todo[todoIndex]);
     }
     search.options[0].selected = true;
     displayData(searchArray, searchArray.length, todo.length);
@@ -78,9 +78,9 @@ function statusSearch(search){
     status = (searchKey == 'pending')?pending:completed;
     let todo = getToDo();;
     let searchArray = [];
-    for(let i = 0; i < todo.length; i++){
-        if(todo[i].status === status)
-            searchArray.push(todo[i]);
+    for(let todoIndex = 0; todoIndex < todo.length; todoIndex++){
+        if(todo[todoIndex].status === status)
+            searchArray.push(todo[todoIndex]);
     }
     search.options[0].selected = true;
     displayData(searchArray, searchArray.length, todo.length);
@@ -101,10 +101,10 @@ function dateSearch(){
 function searchByDate(oldDate, newDate){
     let todo = getToDo();;
     let searchArray = [];
-    for(let i = 0; i < todo.length; i++){
-        let date = new Date(todo[i].dueDate)
+    for(let todoIndex = 0; todoIndex < todo.length; todoIndex++){
+        let date = new Date(todo[todoIndex].dueDate)
         if(date >= oldDate && date <= newDate)
-            searchArray.push(todo[i]);
+            searchArray.push(todo[todoIndex]);
     }
     displayData(searchArray, searchArray.length, todo.length);
 }
@@ -113,66 +113,85 @@ function markDone(element, reLoad){
     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let todo = userData.todo;
     let taskCompleted = 10;
-    for(let i = 0; i < todo.length; i++){
-        if(todo[i].id == element){
-            todo[i].status = taskCompleted;
-            userData.todo.splice(i, 1, todo[i]);
+    for(let todoIndex = 0; todoIndex < todo.length; todoIndex++){
+        if(todo[todoIndex].id == element){
+            todo[todoIndex].status = taskCompleted;
+            userData.todo.splice(todoIndex, 1, todo[todoIndex]);
             localStorage.setItem(sessionStorage.getItem('activeUser'), JSON.stringify(userData));
             break;
         }
     }
     if(reLoad)
         loadToDo();
-}
-
-function batchMarkDone(){
-    let  items = document.getElementsByName("selectToDo");
-    for(let i = 0; i < items.length; i++){
-        if(items[i].checked == true)
-            markDone(items[i].id, false);
-    }
-    loadToDo();
+    document.getElementById('selectAll').checked = false;
 }
 
 function deleteTask(element, reLoad){
     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-    for(let i = 0; i < userData.todo.length; i++){
-        if(userData.todo[i].id == element){
-            userData.todo.splice(i, 1);
+    for(let todoIndex = 0; todoIndex < userData.todo.length; todoIndex++){
+        if(userData.todo[todoIndex].id == element){
+            userData.todo.splice(todoIndex, 1);
             localStorage.setItem(sessionStorage.getItem('activeUser'), JSON.stringify(userData));
             break;
         }
     }
     if(reLoad)
         loadToDo();
+
+        document.getElementById('selectAll').checked = false;
+}
+
+function batchOperation(markDone){
+// if true then markDone 
+// if false then Delete
+}
+
+function batchMarkDone(){
+    let  checklist = document.getElementsByName("selectToDo");
+    for(let item = 0; item < checklist.length; item++){
+        if(checklist[item].checked == true)
+            markDone(checklist[item].id, false);
+    }
+    loadToDo();
+}
+
+function markAll(element){
+    let selectAll = false;
+    if(element.checked)
+        selectAll = true;
+
+    let  checklist = document.getElementsByName("selectToDo");
+    
+    checklist.forEach(element => {
+        element.checked = selectAll;
+    });
 }
 
 function batchDelete(){
-    let  items = document.getElementsByName("selectToDo");
-		for(let i = 0; i < items.length; i++){
-			if(items[i].checked == true)
-				deleteTask(items[i].id, false);
+    let  checklist = document.getElementsByName("selectToDo");
+		for(let item = 0; item < checklist.length; item++){
+			if(checklist[item].checked == true)
+				deleteTask(checklist[item].id, false);
     }
     loadToDo();
 }
 
 function displayData(todoList, result, total){
-
     let ul = document.querySelector("ul");
     ul.innerHTML = "";
     document.getElementById('todoCount').innerHTML = "Showing "+result+" out of "+total;
     let categories = ['All','Home','School','Market','Test'];
     let selectCategory = document.getElementById('catSearch');
     selectCategory.innerHTML = "<option value=\"Sel\" selected disabled>Select Category</option>";
-    for(let i = 0; i < categories.length; i++){
+    for(let category = 0; category < categories.length; category++){
         let option = document.createElement('option');
-        option.value = categories[i];
-        option.textContent = categories[i];
+        option.value = categories[category];
+        option.textContent = categories[category];
         selectCategory.appendChild(option);
     }
 
     ul = document.querySelector("ul");
-    for (let i = 0; i < todoList.length; i++) {
+    for (let todoIndex = 0; todoIndex < todoList.length; todoIndex++) {
         let editButton = "", deleteButton = "", doneButton = "";
         let listItem = document.createElement('li');  
         let checkbox = document.createElement('input');
@@ -187,13 +206,13 @@ function displayData(todoList, result, total){
 
         checkbox.type = "checkbox";
         checkbox.name = "selectToDo";
-        checkbox.id = todoList[i].id;
+        checkbox.id = todoList[todoIndex].id;
 
-        dueDate.textContent = todoList[i].dueDate;
-        let dueDateColor = new Date(todoList[i].dueDate)
-        if(todoList[i].status < 0){
-            doneButton = "<button id="+todoList[i].id+" onclick=\"markDone(this.id, true)\" name=\"todoOption\" > Mark Done</button>";
-            editButton = "<button id="+todoList[i].id+" onclick=\"editTask(this.id)\" >Edit</button>";
+        dueDate.textContent = todoList[todoIndex].dueDate;
+        let dueDateColor = new Date(todoList[todoIndex].dueDate)
+        if(todoList[todoIndex].status < 0){
+            doneButton = "<button id="+todoList[todoIndex].id+" onclick=\"markDone(this.id, true)\" name=\"todoOption\" > Mark Done</button>";
+            editButton = "<button id="+todoList[todoIndex].id+" onclick=\"editTask(this.id)\" >Edit</button>";
             if(new Date() > dueDateColor)
                 status.style = "background-color:red";
             else
@@ -203,20 +222,20 @@ function displayData(todoList, result, total){
             
        let publicTodo;
     
-       if(todoList[i].isPublic == 'no')
+       if(todoList[todoIndex].isPublic == 'no')
             publicTodo = "Private";
         else
             publicTodo = "Public";
 
-        deleteButton = "<button id="+todoList[i].id+" onclick=\"deleteTask(this.id, true)\" >Delete</button>";
+        deleteButton = "<button id="+todoList[todoIndex].id+" onclick=\"deleteTask(this.id, true)\" >Delete</button>";
         
         isPublic.innerHTML = publicTodo;
             
         todoOption.innerHTML = editButton+""+doneButton+""+deleteButton;
-        category.textContent = todoList[i].category;
-        title.textContent = todoList[i].title;
-        remind.textContent = todoList[i].reminderDate;
-        content.textContent = todoList[i].task;
+        category.textContent = todoList[todoIndex].category;
+        title.textContent = todoList[todoIndex].title;
+        remind.textContent = todoList[todoIndex].reminderDate;
+        content.textContent = todoList[todoIndex].task;
         
         listItem.appendChild(checkbox);
         listItem.appendChild(status);

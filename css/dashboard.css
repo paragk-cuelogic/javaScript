@@ -13,7 +13,7 @@ body{
 .tasks{
     background-color: rgb(138, 86, 77);
     color: white;
-    margin: 50px auto;
+    margin: auto;
     width: 1050px;
     padding: 50px;
     box-shadow: 1px 1px 8px black;
@@ -179,6 +179,6 @@ ul li div button{
 }
 
 .tasks > p span:nth-child(5){
-    margin-left: 90px;
+    margin-right: 110px;
   
 }

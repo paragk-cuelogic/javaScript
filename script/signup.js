@@ -95,8 +95,8 @@ function checkUserName(userName){
     let users = loadUserData();
     
     if(users != ""){
-        for(let i = 0; i < users.userNames.length; i++){
-            if(users.userNames[i] == userName.value){
+        for(let userID = 0; userID < users.userNames.length; userID++){
+            if(users.userNames[userID] == userName.value){
                 validUserName = false;
                 setInputBackground(userName, false);
                 alert("Username already used.");
@@ -115,8 +115,8 @@ function checkUserName(userName){
 function checkEmail(email){
     let users = loadUserData();
     if(users != ""){
-        for(let i = 0; i < users.emailId.length; i++){
-            if(users.emailId[i] == email.value){
+        for(let userID = 0; userID < users.emailId.length; userID++){
+            if(users.emailId[userID] == email.value){
                 setInputBackground(email,false);
                 validEmail = false;
                 alert("Email-ID already used.")

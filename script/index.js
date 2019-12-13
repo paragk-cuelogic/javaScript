@@ -17,11 +17,11 @@ function checkUser(){
         let userData = JSON.parse(localStorage.getItem('users')) || [];
 
         if(userData != ""){
-            for(let i=0; i < userData.emailId.length; i++){
-                if(userData.emailId[i] == email.value || userData.userNames[i] == email.value){
+            for(let userID=0; userID < userData.emailId.length; userID++){
+                if(userData.emailId[userID] == email.value || userData.userNames[userID] == email.value){
                     flag = true;
             
-                setDetails(userData.userNames[i]);
+                setDetails(userData.userNames[userID]);
                     let passwordDiv = document.getElementById("passwordDiv");
                     email.disabled = true;
                     signup.style.display = "none";
@@ -47,11 +47,16 @@ function setDetails(userName){
 
 function authenticateUser(){
     let userData = JSON.parse(localStorage.getItem(userName));
-    let password = document.getElementById('password').value;
-    if( password == userData.password){
+    let password = document.getElementById('password');
+    if( password.value == userData.password){
         sessionStorage.setItem('activeUser',userName);
         location.assign('dashboard.html');
     }
+    else{
+        password.value = "";
+        alert("Wrong Password");
+    }
+        
 }
 
 function signUp(){
