@@ -159,9 +159,7 @@ function markAll(element){
     let selectAll = false;
     if(element.checked)
         selectAll = true;
-
     let  checklist = document.getElementsByName("selectToDo");
-    
     checklist.forEach(element => {
         element.checked = selectAll;
     });
@@ -174,6 +172,16 @@ function batchDelete(){
 				deleteTask(checklist[item].id, false);
     }
     loadToDo();
+}
+
+function showContent(element){
+    if(element.name == "hiddenContent"){
+        element.style = "height: auto; overflow: auto;"
+        element.name = "showingContent";
+    }else{
+        element.style = "height: 62px; overflow: hidden;"
+        element.name = "hiddenContent";
+    }
 }
 
 function displayData(todoList, result, total){
@@ -246,6 +254,8 @@ function displayData(todoList, result, total){
         listItem.appendChild(isPublic);
         listItem.appendChild(todoOption);
         listItem.appendChild(content);
+        listItem.setAttribute("onclick","showContent(this)");
+        listItem.setAttribute("name","hiddenContent");
         ul.appendChild(listItem);
     }
 }

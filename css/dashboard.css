@@ -140,10 +140,10 @@ display: inline;
     overflow: auto; */
 }
 
-ul li:hover{
+/* ul li:hover{
     height: auto;
     overflow: auto;
-}
+} */
 
 ul li div{
     display: none;

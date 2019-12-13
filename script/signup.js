@@ -4,8 +4,10 @@ let validUserName = false,
     validRepassword = false,
     validFirstname = false,
     validLastName = false,
-    updating = false;
+    updating = false,
+    signupImage = false;
     imageChanged = false;
+
 
     let userName = document.getElementById('userName');
     let email = document.getElementById('email');
@@ -52,7 +54,8 @@ function displayProfile(){
     lastName.value = userData.lastName;
     gender.value = userData.gender;
     address.value = userData.address;
-    userImage.src = userData.userImage;
+    if(userData.userImage)
+        userImage.src = userData.userImage;
 }
 
 function setInputBackground(element, color){
@@ -195,8 +198,9 @@ function signUp(isNew){
 function profileHelper(isNew){
 
     UploadProfilePicture();
-    
-    let picture = sessionStorage.getItem("displayPicture");
+    let picture = "";
+    if(userImage || imageChanged)
+        picture = sessionStorage.getItem("displayPicture");
  
     let obj = {
     userName : userName.value,
@@ -214,7 +218,6 @@ function profileHelper(isNew){
         obj.toDoId = 0;
         let users = loadUserData();
         let userData = {};
-
         if(users == ""){
                 userData.userNames = [obj.userName];
                 userData.emailId = [obj.email];
@@ -246,18 +249,29 @@ function UploadProfilePicture() {
     let Image = document.getElementById("profilePicture").files[0];
     if(Image == null && updating){
         imageChanged = false;
-    }else if(updating && Image != null){
+    }else if(updating && Image != null ){
         imageChanged = true;
-        let imagereader = new FileReader();
-        imagereader.readAsDataURL(Image);
-        
-        imagereader.onload = function () {
-        let imgdata = imagereader.result;
-        sessionStorage.setItem("displayPicture", imgdata);
-        document.getElementById("userImage").src = sessionStorage.displayPicture;
-        };
-
-        imagereader.onerror = function (error) {   
-        };
+        setImage(Image);
     }
+    else if(!updating && Image != null){
+        signupImage = true; 
+        setImage(Image);
+    }
+    else if(!updating && Image == null){
+         signupImage = false
+    }
+}
+
+function setImage(Image){
+    let imagereader = new FileReader();
+    imagereader.readAsDataURL(Image);
+    
+    imagereader.onload = function () {
+    let imgdata = imagereader.result;
+    sessionStorage.setItem("displayPicture", imgdata);
+    document.getElementById("userImage").src = sessionStorage.displayPicture;
+    };
+
+    imagereader.onerror = function (error) {   
+    };
 }
