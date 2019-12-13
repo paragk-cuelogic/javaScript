@@ -1,15 +1,15 @@
-let listItemCount = 0;
-
 (function(){
     let userName = sessionStorage.getItem('activeUser');
     sessionStorage.removeItem('editTask');
     if(userName == null)
         location.assign('index.html');
+
     loadToDo();
     let today = new Date();
     let userData = JSON.parse(localStorage.getItem(userName));
     if(userData.userImage)
         document.getElementById("userImage").src = userData.userImage;
+
     today = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
     document.getElementById('toDate').value = today;
     document.getElementById('fromDate').value = today;
@@ -28,21 +28,15 @@ function editTask(id){
     location.replace('task.html');
 }
 
-// Search Operations
-
 function getToDo(){
     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     return userData.todo;
 }
 
 function loadToDo(){
-    let ul = document.querySelector("ul");
-    ul.innerHTML = "";
     let todoList = getToDo();
     displayData(todoList, todoList.length, todoList.length);
 }
-
-// Text Search
 
 function search(search){
     let searchKey = search.value;
@@ -52,12 +46,9 @@ function search(search){
         if((todo[i].task).search(searchKey) > -1 || (todo[i].title).search(searchKey) > -1)
             searchArray.push(todo[i]);
     }
-    let ul = document.querySelector("ul");
-    ul.innerHTML = "";
+
     displayData(searchArray, searchArray.length, todo.length);
 }
-
-// Category search(Home, School, ... .. ..)
 
 function categorySearch(search){
     let searchKey = search.value;
@@ -71,13 +62,9 @@ function categorySearch(search){
         if(todo[i].category == searchKey)
             searchArray.push(todo[i]);
     }
-    let ul = document.querySelector("ul");
-    ul.innerHTML = "";
-    displayData(searchArray, searchArray.length, todo.length);
     search.options[0].selected = true;
+    displayData(searchArray, searchArray.length, todo.length);
 }
-
-// Status Search (Pending, Done)
 
 function statusSearch(search){
     let searchKey = search.value;
@@ -86,21 +73,17 @@ function statusSearch(search){
         return;
     }
     let status = 100;
-    if(searchKey == 'pending')
-        status = -1;
-    else
-        status = 10;
+    let pending = -1;
+    let completed = 10;
+    status = (searchKey == 'pending')?pending:completed;
     let todo = getToDo();;
-    
     let searchArray = [];
     for(let i = 0; i < todo.length; i++){
         if(todo[i].status === status)
             searchArray.push(todo[i]);
     }
-    let ul = document.querySelector("ul");
-    ul.innerHTML = "";
-    displayData(searchArray, searchArray.length, todo.length);
     search.options[0].selected = true;
+    displayData(searchArray, searchArray.length, todo.length);
 }
 
 function dateSearch(){
@@ -115,8 +98,6 @@ function dateSearch(){
     searchByDate(oldDate, newDate);
 }
 
-// Date Range Search (From yyyy-mm-dd To yyyy-mm-dd)
-
 function searchByDate(oldDate, newDate){
     let todo = getToDo();;
     let searchArray = [];
@@ -124,35 +105,31 @@ function searchByDate(oldDate, newDate){
         let date = new Date(todo[i].dueDate)
         if(date >= oldDate && date <= newDate)
             searchArray.push(todo[i]);
-            console.log(todo[i].title);
     }
-    let ul = document.querySelector("ul");
-    ul.innerHTML = "";
     displayData(searchArray, searchArray.length, todo.length);
 }
 
 function markDone(element, reLoad){
     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let todo = userData.todo;
-
+    let taskCompleted = 10;
     for(let i = 0; i < todo.length; i++){
         if(todo[i].id == element){
-            todo[i].status = 10;
+            todo[i].status = taskCompleted;
             userData.todo.splice(i, 1, todo[i]);
             localStorage.setItem(sessionStorage.getItem('activeUser'), JSON.stringify(userData));
             break;
         }
     }
-    if(reLoad){
+    if(reLoad)
         loadToDo();
-    }
 }
 
 function batchMarkDone(){
     let  items = document.getElementsByName("selectToDo");
-		for(let i = 0; i < items.length; i++){
-			if(items[i].checked == true)
-				markDone(items[i].id, false);
+    for(let i = 0; i < items.length; i++){
+        if(items[i].checked == true)
+            markDone(items[i].id, false);
     }
     loadToDo();
 }
@@ -166,9 +143,8 @@ function deleteTask(element, reLoad){
             break;
         }
     }
-    if(reLoad){
+    if(reLoad)
         loadToDo();
-    }
 }
 
 function batchDelete(){
@@ -181,6 +157,9 @@ function batchDelete(){
 }
 
 function displayData(todoList, result, total){
+
+    let ul = document.querySelector("ul");
+    ul.innerHTML = "";
     document.getElementById('todoCount').innerHTML = "Showing "+result+" out of "+total;
     let categories = ['All','Home','School','Market','Test'];
     let selectCategory = document.getElementById('catSearch');
@@ -192,8 +171,9 @@ function displayData(todoList, result, total){
         selectCategory.appendChild(option);
     }
 
-    let ul = document.querySelector("ul");
+    ul = document.querySelector("ul");
     for (let i = 0; i < todoList.length; i++) {
+        let editButton = "", deleteButton = "", doneButton = "";
         let listItem = document.createElement('li');  
         let checkbox = document.createElement('input');
         let status = document.createElement('span');
@@ -201,12 +181,10 @@ function displayData(todoList, result, total){
         let title = document.createElement('span');
         let dueDate = document.createElement('span');
         let remind = document.createElement('span');
-        let edit = document.createElement('div');
-        let markDone = document.createElement('div');
-        let deleteTask = document.createElement('div');
         let content = document.createElement('p');
         let isPublic = document.createElement('span');
-        
+        let todoOption = document.createElement('div');
+
         checkbox.type = "checkbox";
         checkbox.name = "selectToDo";
         checkbox.id = todoList[i].id;
@@ -214,24 +192,27 @@ function displayData(todoList, result, total){
         dueDate.textContent = todoList[i].dueDate;
         let dueDateColor = new Date(todoList[i].dueDate)
         if(todoList[i].status < 0){
-            markDone.innerHTML = "<button id="+todoList[i].id+" onclick=\"markDone(this.id, true)\" > Mark Done</button>"
-            edit.innerHTML = "<button id="+todoList[i].id+" onclick=\"editTask(this.id)\" >Edit</button>";
+            doneButton = "<button id="+todoList[i].id+" onclick=\"markDone(this.id, true)\" name=\"todoOption\" > Mark Done</button>";
+            editButton = "<button id="+todoList[i].id+" onclick=\"editTask(this.id)\" >Edit</button>";
             if(new Date() > dueDateColor)
                 status.style = "background-color:red";
             else
                 status.style = "background-color:yellow";
-        }   
-        else
+        }else
             status.style = "background-color:green";
+            
        let publicTodo;
-        if(todoList[i].isPublic == 'no')
+    
+       if(todoList[i].isPublic == 'no')
             publicTodo = "Private";
         else
             publicTodo = "Public";
 
-        deleteTask.innerHTML = "<button id="+todoList[i].id+" onclick=\"deleteTask(this.id, true)\" >Delete</button>";
+        deleteButton = "<button id="+todoList[i].id+" onclick=\"deleteTask(this.id, true)\" >Delete</button>";
+        
         isPublic.innerHTML = publicTodo;
             
+        todoOption.innerHTML = editButton+""+doneButton+""+deleteButton;
         category.textContent = todoList[i].category;
         title.textContent = todoList[i].title;
         remind.textContent = todoList[i].reminderDate;
@@ -244,11 +225,8 @@ function displayData(todoList, result, total){
         listItem.appendChild(title);
         listItem.appendChild(remind);
         listItem.appendChild(isPublic);
-        listItem.appendChild(edit);
-        listItem.appendChild(markDone);
-        listItem.appendChild(deleteTask);
+        listItem.appendChild(todoOption);
         listItem.appendChild(content);
         ul.appendChild(listItem);
-        listItemCount++;
     }
 }

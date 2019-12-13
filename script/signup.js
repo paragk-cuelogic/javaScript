@@ -55,6 +55,15 @@ function displayProfile(){
     userImage.src = userData.userImage;
 }
 
+function setInputBackground(element, color){
+    if(color)
+        element.style = "background-color:green";
+    else
+        element.style = "background-color:red";
+}
+
+let loadUserData = () => JSON.parse(localStorage.getItem('users'))||[];
+
 function checkUser(userName){
     if(userName.type == "email"){
         let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -62,56 +71,64 @@ function checkUser(userName){
             checkEmail(userName);
         else{
             alert("Invalid Email");
+            setInputBackground(userName, false);
         }
     }else{
         let usernameRegex = /^[a-zA-Z0-9]+$/;
         if((userName.value).match(usernameRegex))
             checkUserName(userName);
         else{
+            setInputBackground(userName, false)
             alert("User name must contain alphabates and digits only");
         }   
     }
 }
 
 function checkUserName(userName){
-    console.log("Inside userName Validator");
-    name = userName.value;
-    let users = JSON.parse(localStorage.getItem('users'))||[];
+    if(userName.value == "users"){
+        userName.value = "";
+        setInputBackground(userName, false);
+        alert("'users' Cannot a username")
+        return;
+    }
+    
+    let users = loadUserData();
+    
     if(users != ""){
         for(let i = 0; i < users.userNames.length; i++){
-            if(users.userNames[i] == name){
+            if(users.userNames[i] == userName.value){
                 validUserName = false;
-                userName.style = "background-color:red";
+                setInputBackground(userName, false);
+                alert("Username already used.");
                 break;
             }else{
                 validUserName = true;
-                userName.style = "background-color:green";
+                setInputBackground(userName, true);
             }
         }  
     }else{
         validUserName = true;
-        userName.style = "background-color:green";
+        setInputBackground(userName, true);
     }
 }
 
 function checkEmail(email){
-    console.log("Inside checkEmail()");
-    name = email.value;
-    let users = JSON.parse(localStorage.getItem('users'))||[];
+    let users = loadUserData();
     if(users != ""){
         for(let i = 0; i < users.emailId.length; i++){
-            if(users.emailId[i] == name){
-                email.style = "background-color:red";
+            if(users.emailId[i] == email.value){
+                setInputBackground(email,false);
                 validEmail = false;
+                alert("Email-ID already used.")
                 break;
             }else{
                 validEmail = true;
-                email.style = "background-color:green";
+                setInputBackground(email,true);
             }
         }  
     }else{
         validEmail = true;
-        email.style = "background-color:green";
+        setInputBackground(email,true);
     }
 }
 
@@ -123,11 +140,10 @@ function checkPassword(password, rePassword){
     let passReg = /^.*(?=.{8,})((?=.*[!@#$%^&*]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/g;
     if((password.value).match(passReg)){
         validPassword = true;
-        password.style = "background-color:green";
+        setInputBackground(password,true);
     }else{
-        validPassword = false;
         alert("use strong password")
-        password.style = "background-color:red";
+        setInputBackground(password, false);
     }
 }
 
@@ -135,18 +151,16 @@ function confirmPassword(rePassword, password){
     validRepassword = false;
     if(validPassword){  
         if(rePassword.value == password.value){
-            rePassword.style = "background-color:green";
+            setInputBackground(rePassword,true);
             validRepassword = true;
         }
         else{
-            rePassword.style = "background-color:red";
-            validRepassword = false;
+            setInputBackground(rePassword,false);
         }
             
     }else{
-        rePassword.style = "background-color:red";
+        setInputBackground(rePassword, false);
         rePassword.value = "";
-        validRepassword = false;
         alert("First Enter Password");
     }
 
@@ -160,11 +174,15 @@ function checkFirstName(firstName){
 function checkLastName(lastName){
     validLastName = false;
     validLastName = checkName(lastName.value);
+    if(validLastName)
+        setInputBackground(lastName,true);
+    else
+        setInputBackground(lastName,false);
 }
 
 function checkName(name){
-    let nameReg = /[a-zA-z]{3,20}/
-    return nameReg.test(name)
+    let nameRegex = /[a-zA-z]{3,20}/
+    return nameRegex.test(name)
 }
 
 function signUp(isNew){
@@ -175,7 +193,7 @@ function signUp(isNew){
 }
 
 function profileHelper(isNew){
-    
+
     UploadProfilePicture();
     
     let picture = sessionStorage.getItem("displayPicture");
@@ -191,11 +209,10 @@ function profileHelper(isNew){
     userImage : picture
     };
     
-
     if(isNew){
         obj.todo = [];
         obj.toDoId = 0;
-        let users = JSON.parse(localStorage.getItem('users'))||[];
+        let users = loadUserData();
         let userData = {};
 
         if(users == ""){

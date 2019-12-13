@@ -123,9 +123,21 @@ p.Status{
     background-color: fc6603;
 }
 
+#todoHeader{
+    position: sticky;
+    top: 0;
+   
+}
+
 ul li{
     height: 62px;
     overflow: hidden;
+}
+
+ul li:hover div{
+display: inline;
+    /* height: auto;
+    overflow: auto; */
 }
 
 ul li:hover{
@@ -133,7 +145,16 @@ ul li:hover{
     overflow: auto;
 }
 
-.tasks > p{
+ul li div{
+    display: none;
+}
+
+ul li div button{
+    height: 30px;
+    margin-left: 5px;
+    border-radius: 5px;
+    color: white;
+    background-color: rebeccapurple;
 }
 
 .tasks > p span{

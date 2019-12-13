@@ -9,8 +9,6 @@
     let editIndex = -1;
     let validTitle = false;
     let validContent = false;
-    let validDueDate = true;
-    let validReminder = false;
     
 (function(){
     if(!sessionStorage.getItem('activeUser'))
@@ -31,15 +29,12 @@
                 reminderDate.value = userData.todo[i].reminderDate;
                 validTitle = true;
                 validContent = true;
-                // validDueDate = true;
-                validReminder = true;
                 break;
             }
         }
     }else{
-        let today = new Date();
-        dueDate.value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
-        // validDueDate = true;
+        dueDate.value = dateConverter(new Date());
+        setDueDateLimit();
     }        
 })();
 
@@ -61,68 +56,36 @@ function isEmptyContent(element){
         element.style = "background-color:red"; 
 }
 
-function dueDateCheck(element){
-    toggleReminder(false);
-    validDueDate = false;
-    validReminder = false;
+function dateConverter(date){
+    return ''+date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+}
 
-    let date = new Date(element.value);
-    let today = new Date();
+function setDueDateLimit(){
+    dueDate.setAttribute("min",dateConverter(new Date()));
+}
 
-    if( date >= today){
-        element.style = "background-color:green";
-        validDueDate = true;
-    }else{
-        element.style = "background-color:red";
-    }
+function setReminderDateLimit(){
+    reminderDate.setAttribute("min", dateConverter(new Date()));
+    reminderDate.setAttribute("max", dueDate.value)
 }
 
 function toggleReminder(value){
-    if(value && validDueDate){
-        let today = new Date();
-        reminderDate.value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);    
-        document.getElementById('reminderDiv').style = "display:block";   
+    if(value){
+        document.getElementById('reminderDiv').style = "display:block";
+        reminderDate.value = dateConverter(new Date());
+        setReminderDateLimit();
     }else{
-        errormsg.innerHTML = "select valid Due Date First";
-        document.getElementById("falseReminder").checked = "checked";
-        reminderDate.value = "";
         document.getElementById('reminderDiv').style = "display:none";
-    }       
-}
-
-function reminderChecker(element){
-    let date = new Date(element.value);
-    let today = new Date();
-    let temp = document.getElementById('DueDate').value 
-    let due = new Date(temp);
-    validReminder = false;
-    if(validDueDate){
-        if(date < today || date > due){
-            validReminder = false;
-            element.style = "background-color:red";
-        }
-        else{
-              validReminder = true;
-              element.style = "background-color:green";
-            }
-    }else{
-        validReminder = false;
-        errormsg.innerHTML = "select valid Due Date First";
+        document.getElementById('noReminder').checked = true;
     }
+        
 }
-function addNewTask(isNew){
-    let isReminder = document.querySelector('input[name="reminder"]:checked').value;
-    if(isReminder = "no")
-        validReminder = true;
 
-    if(validTitle && validContent && validDueDate && validReminder)
+function addNewTask(isNew){
+    if(validTitle && validContent)
         addTask(isNew);        
     else
         errormsg.innerHTML = "Fill All the details";
-}
-
-function saveTask(){
-    addNewTask(false);
 }
 
 function addTask(newTask){
@@ -159,53 +122,3 @@ function addTask(newTask){
     localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(userData));
     location.assign('dashboard.html');
 }
-
-
-
-
-// function saveTask(){
-
-//     addTask(false);
-//     let isReminder = document.querySelector('input[name="reminder"]:checked').value;
-//     let isPublic = document.querySelector('input[name="public"]:checked').value;
-//     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-//     obj = {};
-//     obj.id = userData.toDoId;
-//     obj.status = -1;
-//     obj.title = title.value;
-//     obj.task = task.value;
-//     obj.category = category.value;
-//     obj.dueDate = dueDate.value;
-//     obj.isReminder = isReminder;
-//     obj.reminderDate = reminderDate.value;
-//     obj.isPublic = isPublic;
-//     userData.todo.splice(editIndex,1,obj);
-//     localStorage.setItem(sessionStorage.getItem('activeUser'), JSON.stringify(userData));
-//     editIndex = -1;
-//     sessionStorage.removeItem('editTask');
-//     location.assign('dashboard.html');
-// }    
-
-// function addNewTask(){
-
-//     addTask(true);
-//     let isReminder = document.querySelector('input[name="reminder"]:checked').value;
-//     let isPublic = document.querySelector('input[name="public"]:checked').value;
-//     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-//     userData.toDoId++;
-//     obj = {};
-//     obj.user = sessionStorage.getItem('activeUser');
-//     obj.id = userData.toDoId;
-//     obj.status = -1;
-//     obj.title = title.value;
-//     obj.task = task.value;
-//     obj.category = category.value;
-//     obj.dueDate = dueDate.value;
-//     obj.isReminder = isReminder;
-//     obj.reminderDate = reminderDate.value;
-//     obj.isPublic = isPublic;
-//     userData.todo.push(obj);
-//     localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(userData));
-//     location.assign('dashboard.html');
-// 
-// }

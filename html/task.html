@@ -27,11 +27,11 @@
         </select>
         
         <p>Due Date</p>
-        <input id="DueDate" type="date" onchange="dueDateCheck(this)">
+        <input id="DueDate" type="date" onchange="toggleReminder(false)">
         
         <p>Set Reminder</p>
         <input type="radio" name="reminder" value="yes" onchange="toggleReminder(true)">Yes
-        <input id="falseReminder" type="radio" name="reminder" value="no" onchange="toggleReminder(false)" checked>No
+        <input id="noReminder" type="radio" name="reminder" value="no" onchange="toggleReminder(false)" checked>No
         
         <div id="reminderDiv" style="display: none;">
             <p>Set Reminder Date</p>
@@ -47,7 +47,7 @@
         <p id="errormsg" style="color:white"></p>
         <hr>
         <input id="addTask" type="button" onclick="addNewTask(true)" name="Add" value="Add to List">
-        <input id="saveTask" style="display: none;" type="button" onclick="saveTask()" name="Add" value="Save Changes">
+        <input id="saveTask" style="display: none;" type="button" onclick="addNewTask(false)" name="Add" value="Save Changes">
         <input type="button"  onclick="location.assign('dashboard.html')" name="Add" value="Cancel & Go Back">
     </div>
        <script src="../script/tasks.js"></script>
