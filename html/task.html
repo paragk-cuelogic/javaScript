@@ -9,6 +9,9 @@
 </head>
 <body>
         <!-- Date category markdone isReminder reminderDate isPublic attach file -->
+        <div id="errorDiv" onclick="dissmissMsg()" style="display: none;color: red; height: 40px; width: 500px; background-color: skyblue;padding: 20px; position: sticky; top: 0%; margin: auto;">
+            
+        </div>
     <div class="container">
         <h1> TO-Do App</h1>
         <h2>Adding New Item To List</h2>
@@ -27,7 +30,7 @@
         </select>
         
         <p>Due Date</p>
-        <input id="DueDate" type="date" onchange="toggleReminder(false)">
+        <input id="DueDate" type="date" onblur="checkDueDate(this, false)">
         
         <p>Set Reminder</p>
         <input type="radio" name="reminder" value="yes" onchange="toggleReminder(true)">Yes
@@ -35,7 +38,7 @@
         
         <div id="reminderDiv" style="display: none;">
             <p>Set Reminder Date</p>
-            <input id="reminderDate" type="date" onchange="reminderChecker(this)">
+            <input id="reminderDate" type="date" onblur="checkReminderDate(this)">
         </div>
         
         

@@ -155,16 +155,6 @@ function batchMarkDone(){
     loadToDo();
 }
 
-function markAll(element){
-    let selectAll = false;
-    if(element.checked)
-        selectAll = true;
-    let  checklist = document.getElementsByName("selectToDo");
-    checklist.forEach(element => {
-        element.checked = selectAll;
-    });
-}
-
 function batchDelete(){
     let  checklist = document.getElementsByName("selectToDo");
 		for(let item = 0; item < checklist.length; item++){
@@ -174,6 +164,17 @@ function batchDelete(){
     loadToDo();
 }
 
+function markAll(element){
+    let checked = false;
+    if(element.checked)
+        checked = true;
+    let  checklist = document.getElementsByName("selectToDo");
+    checklist.forEach(element => {
+        element.checked = checked;
+    });
+}
+
+// For Content Display
 function showContent(element){
     if(element.name == "hiddenContent"){
         element.style = "height: auto; overflow: auto;"
@@ -185,6 +186,11 @@ function showContent(element){
 }
 
 function displayData(todoList, result, total){
+    if(result == 0)
+        document.getElementById('noRecords').style.display = "block";
+    else
+        document.getElementById('noRecords').style.display = "none";
+    
     let ul = document.querySelector("ul");
     ul.innerHTML = "";
     document.getElementById('todoCount').innerHTML = "Showing "+result+" out of "+total;

@@ -9,6 +9,7 @@
     let editIndex = -1;
     let validTitle = false;
     let validContent = false;
+    let errorMsg = document.getElementById('errorDiv');
     
 (function(){
     if(!sessionStorage.getItem('activeUser'))
@@ -37,6 +38,16 @@
         setDueDateLimit();
     }        
 })();
+
+function showErrorMsg(msg){
+    let dismissMsg = `\nClick here to dismiss`
+    errorMsg.style.display = "block";
+    errorMsg.innerText = msg + dismissMsg;
+}
+
+function dissmissMsg(){
+    errorMsg.style.display = "none";
+}
 
 function isEmptyTitle(element){
     validTitle = false;
@@ -78,14 +89,46 @@ function toggleReminder(value){
         document.getElementById('reminderDiv').style = "display:none";
         document.getElementById('noReminder').checked = true;
     }
+}
+
+function checkDueDate(element){
+    toggleReminder(false);
+    if(element.value < dateConverter(new Date())){
+        showErrorMsg("cannot Select Date from past");
+        element.value = dateConverter(new Date());
+    }
         
 }
 
+function checkReminderDate(element){
+    if(element.value > dueDate.value || element.value < dateConverter(new Date())){
+        
+        alert("You can only select date from Current Date to Due Date.");
+        element.value = dateConverter(new Date());
+    }
+}
+
 function addNewTask(isNew){
+
+    let categoryList = ['Home','School','Market'];
+    let categoryManipulated = true;
+
+    for(let categoryType = 0; categoryType < categoryList.length; categoryType++){
+        if(category.value == categoryList[categoryType])
+            categoryManipulated = false;
+    }
+
+    if(categoryManipulated){
+        alert("Category Manipulated .. Reloading the page");
+        location.assign('dashboard.html');
+    }
+        
     if(validTitle && validContent)
         addTask(isNew);        
-    else
-        errormsg.innerHTML = "Fill All the details";
+    else{
+        showErrorMsg("Fill All the Details");
+    }
+    
 }
 
 function addTask(newTask){
@@ -120,5 +163,5 @@ function addTask(newTask){
         sessionStorage.removeItem('editTask');
     }
     localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(userData));
-    location.assign('dashboard.html');
+    location.replace('dashboard.html');
 }

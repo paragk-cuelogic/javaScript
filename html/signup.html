@@ -8,20 +8,21 @@
     <title>TO-DO</title>
 </head>
 <body>
-
+        <div id="errorDiv" onclick="dissmissMsg()" style="display: none;color: red; height: 40px; width: 500px; background-color: skyblue;padding: 20px; position: sticky; top: 0%; margin: auto;">
+            
+        </div>
 <div class="container">
         <h1>TO-DO App</h1> <hr>
 <form NAME="signUP" action="" method="POST" autocomplete="off">
 
-                <span id="goToDashboard" style="display: none; padding: 20px; text-align: center; background-color: rgb(196, 150, 65); margin: 50px; box-shadow: 1px 1px 5px black;"
-                onclick="location.assign('dashboard.html')">Go to Dashboard</span>
-                <span id="goToLogin" style="display: block; padding: 20px; text-align: center; background-color: rgb(196, 150, 65); margin: 50px; box-shadow: 1px 1px 5px black;"
-                onclick="location.assign('dashboard.html')">Login Instead</span>
+                <button id="goToDashboard" style="display: none; padding: 20px; text-align: center; background-color: rgb(196, 150, 65); margin: 50px; box-shadow: 1px 1px 5px black;"
+                onclick="location.assign('dashboard.html')">Go to Dashboard</button>
+                <button id="goToLogin" style="display: block; padding: 20px; text-align: center; background-color: rgb(196, 150, 65); margin: 50px; box-shadow: 1px 1px 5px black;"
+                onclick="location.assign('dashboard.html')">Login Instead</button>
 
     <h2>User Registration Form</h2>
 
-        <input id="userName" type="text" placeholder="Enter User Name" 
-        name="userName" value="" onfocusout="checkUser(this)" required>
+        <input id="userName" class="inputField" type="text" placeholder="Enter User Name" name="userName" value="" onfocusout="checkUser(this)" required>
         <p id="hint userName">
             Need Help ? <br>
             Cannot Be Empty
@@ -29,14 +30,14 @@
             No Space
         </p>
 
-        <input id="email" on type="email" placeholder="Enter Email-id" name="email" value=""  
+        <input id="email" class="inputField" type="email" placeholder="Enter Email-id" name="email" value=""  
         onchange="checkUser(this)" required>
         <p id="hint userName">
                 Need Help ? <br>
                 Enter Valid Email Address
         </p>
 
-        <input id="password" type="password" placeholder="Enter Password" 
+        <input id="password" class="inputField" type="password" placeholder="Enter Password" 
         onchange="checkPassword(this, document.getElementById('Repassword'))" required>
         <p id="hint userName">
                 Need Help ? <br>
@@ -45,14 +46,14 @@
                 Digit & Special Character from(!@#$%^&*) only.
         </p>
 
-        <input id="Repassword" type="password" placeholder="Confirm Password" 
+        <input id="Repassword" class="inputField" type="password" placeholder="Confirm Password" 
         onchange="confirmPassword(this, document.getElementById('password'))"required>
         <p id="hint userName">
             Need Help ? <br>
             Re-Enter Password
         </p>
 
-        <input id="firstName" type="text" placeholder="Enter First Name" name="firstName" value="" 
+        <input id="firstName" class="inputField" type="text" placeholder="Enter First Name" name="firstName" value="" 
         onchange="checkFirstName(this)" required>
         <p id="hint userName">
             Need Help ? <br>
@@ -60,7 +61,7 @@
             No Space
         </p>
         
-        <input id="lastName" type="text" placeholder="Enter Last Name" name="lastName" value=""
+        <input id="lastName" class="inputField" type="text" placeholder="Enter Last Name" name="lastName" value=""
         onchange="checkLastName(this)" required>
         <p id="hint userName">
                 Need Help ? <br>
@@ -79,7 +80,7 @@
                 Select Your Gender
         </p>
 
-        <textarea id="address" name="address" placeholder="Enter Address" style="resize: none;" cols="30" rows="4" required></textarea>
+        <textarea id="address" class="inputField" name="address" placeholder="Enter Address" style="resize: none;" cols="30" rows="4" required></textarea>
         <p id="hint userName">
                 Need Help ? <br>
                 Provide Your Local Address.
@@ -98,7 +99,7 @@
     <br>
         
         <input type="button" id="signupButton" value="sigunUP" onclick="signUp(true)">
-        <input type="reset" id="resetButton" value="Reset">
+        <input type="reset" id="resetButton" onclick="resetSignupForm()" value="Reset">
 
         <input type="button" id="updateProfile" style="display: none;" onclick="signUp(false)" value="Update Profile">
         <input type="button" id="resetProfile" style="display: none;" onclick="displayProfile()" value="Reset Details">

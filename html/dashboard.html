@@ -45,7 +45,7 @@
                 <br><input type="date" style="font-size: 18px;" value="2019-12-02" id="fromDate"><span style="width: 30px; text-align: center;"> To </span><input type="date" style="font-size: 18px;" value="2020-01-02" id="toDate"><button style="margin: 10px; padding: 10px;" onclick="dateSearch()" >search</button>
             </div>
                 <span class="showAll" onclick="loadToDo()">Show All</span>
-                
+                <span id="todoCount" style="text-align: center; height: 20px; background-color: rgb(165, 96, 64); padding: 10px; line-height: 20px; font-size: 20px;"></span>    
             </div>
             
             <p id="todoHeader">
@@ -57,8 +57,8 @@
                 <span class="title">Reminder</span>
                 <span class="title">Visibility</span>
             </p>
-            <p id="todoCount" style="text-align: center; height: 20px; background-color: rgb(165, 96, 64); padding: 10px; line-height: 20px; font-size: 20px;"></p>
-            <ul id="todolist"></ul>       
+        <ul id="todolist"></ul>
+            <p id="noRecords" style="font-size: 30px; padding: 20px;">No Records Found</p>       
         </div>
         <script src="../script/dashboard.js"></script>
 </body>

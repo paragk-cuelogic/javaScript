@@ -40,6 +40,15 @@ let validUserName = false,
         }
     })();
 
+function showErrorMsg(msg){
+    let dismissMsg = `\nClick here to dismiss`
+    errorMsg.style.display = "block";
+    errorMsg.innerText = msg + dismissMsg;
+}
+
+function dissmissMsg(){
+    errorMsg.style.display = "none";
+}
 
 function displayProfile(){
     let user = sessionStorage.getItem('activeUser')
@@ -73,7 +82,7 @@ function checkUser(userName){
         if((userName.value).match(mailformat))
             checkEmail(userName);
         else{
-            alert("Invalid Email");
+            showErrorMsg("Invalid Email");
             setInputBackground(userName, false);
         }
     }else{
@@ -82,7 +91,7 @@ function checkUser(userName){
             checkUserName(userName);
         else{
             setInputBackground(userName, false)
-            alert("User name must contain alphabates and digits only");
+            showErrorMsg("User name must contain alphabates and digits only");
         }   
     }
 }
@@ -91,7 +100,7 @@ function checkUserName(userName){
     if(userName.value == "users"){
         userName.value = "";
         setInputBackground(userName, false);
-        alert("'users' Cannot a username")
+        showErrorMsg("'users' Cannot a username")
         return;
     }
     
@@ -102,7 +111,7 @@ function checkUserName(userName){
             if(users.userNames[userID] == userName.value){
                 validUserName = false;
                 setInputBackground(userName, false);
-                alert("Username already used.");
+                showErrorMsg("Username already used.");
                 break;
             }else{
                 validUserName = true;
@@ -122,7 +131,7 @@ function checkEmail(email){
             if(users.emailId[userID] == email.value){
                 setInputBackground(email,false);
                 validEmail = false;
-                alert("Email-ID already used.")
+                showErrorMsg("Email-ID already used.")
                 break;
             }else{
                 validEmail = true;
@@ -145,7 +154,7 @@ function checkPassword(password, rePassword){
         validPassword = true;
         setInputBackground(password,true);
     }else{
-        alert("use strong password")
+        showErrorMsg("use strong password")
         setInputBackground(password, false);
     }
 }
@@ -172,6 +181,10 @@ function confirmPassword(rePassword, password){
 function checkFirstName(firstName){
     validFirstname = false;
     validFirstname = checkName(firstName.value);
+    if(validFirstname)
+        setInputBackground(firstName,true);
+    else
+        setInputBackground(firstName,false);
 }
 
 function checkLastName(lastName){
@@ -274,4 +287,16 @@ function setImage(Image){
 
     imagereader.onerror = function (error) {   
     };
+}
+
+function resetSignupForm(){
+    console.log("reset clicked");
+    let inputFields = document.getElementsByClassName('inputField')
+    console.log(inputFields);
+    for(let test = 0; test < inputFields.length; test++){
+        console.log(inputFields[test].style.backgroundColor);
+        inputFields[test].style.backgroundColor = "white";
+        console.log("updated :"+inputFields[test].style.backgroundColor);
+    }
+    userImage.src = "../images/image.png";
 }
