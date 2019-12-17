@@ -2,6 +2,10 @@
     let userName = sessionStorage.getItem('activeUser');
     if(userName != null)
         location.assign('dashboard.html');
+    if(!JSON.parse(localStorage.getItem('users'))){
+        alert("No Users Added ... Taking You To Signup");
+        location.assign('signup.html');
+    }
 })();
 
 let email = document.getElementById("email");

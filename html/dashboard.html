@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/global.css">
     <title>Welcome</title>
 </head>
 
 <body>
+        <div id="errorDiv" ></div>
         <div class="tasks">
             
             <img id="userImage" onclick="location.assign('profile.html')" src="../images/image.png" alt="" height="100px" width="100px" style="float: left; border-radius: 50%;"> 
             <div class="menu">
                 <p style="float: right;">
-                    <span id="profile" onclick="location.assign('profile.html')">Profile</span>
-                    <span id="logout" onclick="logout()">Logout</span>
+                    <span id="profile" class="test" onclick="location.assign('profile.html')">Profile</span>
+                    <span id="logout" class="test" onclick="logout()">Logout</span>
                 </p>
             </div>
                 <div style="clear: both;"></div>
@@ -25,7 +27,7 @@
 
             <p>
                 <input style="display: inline-block; margin: 22px; font-size: 18px; width: 300px;" placeholder="enter keyword & press tab" type="search" name="search" onchange="search(this)" id="search">
-                <select style="font-size: 17px; padding: 3px;" name="catSearch" id="catSearch"  onchange="categorySearch(this)">
+                <select style="font-size: 17px; padding: 3px;" name="catSearch" id="catSearch" class="test"  onchange="categorySearch(this)">
                    
                 </select>
 
@@ -35,16 +37,16 @@
                     <option value="pending">Pending</option>
                     <option value="done">Done</option>
                 </select>
-                <span style="float: right;" onclick="location.assign('task.html')">Add New</span>
-                <span style="float: right;" onclick="batchMarkDone()">Mark Done</span>
-                <span style="float: right;" onclick="batchDelete()">Delete</span>
+                <span style="float: right;" onclick="location.assign('task.html')" class="test">Add New</span>
+                <span style="float: right;" onclick="batchMarkDone()" class="test">Mark Done</span>
+                <span style="float: right;" onclick="batchDelete()" class="test">Delete</span>
             </p>
             <div style="clear: both;"></div>
             <div style="display: inline-block">
                 <h6 style="text-align: center; margin: 25px auto 2px; font-size: 15px;">Filter By Date Range</h6>
                 <br><input type="date" style="font-size: 18px;" value="2019-12-02" id="fromDate"><span style="width: 30px; text-align: center;"> To </span><input type="date" style="font-size: 18px;" value="2020-01-02" id="toDate"><button style="margin: 10px; padding: 10px;" onclick="dateSearch()" >search</button>
             </div>
-                <span class="showAll" onclick="loadToDo()">Show All</span>
+                <span class="showAll test" onclick="loadToDo()" >Show All</span>
                 <span id="todoCount" style="text-align: center; height: 20px; background-color: rgb(165, 96, 64); padding: 10px; line-height: 20px; font-size: 20px;"></span>    
             </div>
             
@@ -58,6 +60,7 @@
                 <span class="title">Visibility</span>
             </p>
         <ul id="todolist"></ul>
+        <p style="margin-bottom: 50px;"></p>
             <p id="noRecords" style="font-size: 30px; padding: 20px;">No Records Found</p>       
         </div>
         <script src="../script/dashboard.js"></script>

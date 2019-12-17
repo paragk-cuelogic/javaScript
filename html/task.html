@@ -4,22 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/tasks.css">
     <title>Document</title>
 </head>
 <body>
-        <!-- Date category markdone isReminder reminderDate isPublic attach file -->
-        <div id="errorDiv" onclick="dissmissMsg()" style="display: none;color: red; height: 40px; width: 500px; background-color: skyblue;padding: 20px; position: sticky; top: 0%; margin: auto;">
-            
-        </div>
-    <div class="container">
+        <div class="container">
+        <div id="errorDiv"></div>
         <h1> TO-Do App</h1>
         <h2>Adding New Item To List</h2>
         
-        <p>Title</p>
+        <p>Title*</p>
         <input id="title" type="text" placeholder="Title" value="" onfocusout="isEmptyTitle(this)" required>
 
-        <p>content</p>
+        <p>content*</p>
         <textarea style="resize: none;" name="task" id="task" cols="30" rows="5" onfocusout="isEmptyContent(this)" placeholder="Content"></textarea>
         
         <p>category</p>
@@ -49,9 +47,9 @@
         <br>
         <p id="errormsg" style="color:white"></p>
         <hr>
-        <input id="addTask" type="button" onclick="addNewTask(true)" name="Add" value="Add to List">
-        <input id="saveTask" style="display: none;" type="button" onclick="addNewTask(false)" name="Add" value="Save Changes">
-        <input type="button"  onclick="location.assign('dashboard.html')" name="Add" value="Cancel & Go Back">
+        <button id="addTask" type="button" onclick="addNewTask(true)" name="Add" value="Add to List">Add to List</button>
+        <button id="saveTask" style="display: none;" type="button" onclick="addNewTask(false)" name="Add" value="Save Changes">Save Changes</button>
+        <button type="button"  onclick="location.assign('dashboard.html')" name="Add" value="Cancel & Go Back">Cancel & Go Back</button>
     </div>
        <script src="../script/tasks.js"></script>
 </body>

@@ -5,7 +5,6 @@
     let reminderDate = document.getElementById('reminderDate');
     let saveButton = document.getElementById('saveTask');
     let addButton = document.getElementById('addTask');
-    let errormsg = document.getElementById('errormsg');
     let editIndex = -1;
     let validTitle = false;
     let validContent = false;
@@ -40,9 +39,9 @@
 })();
 
 function showErrorMsg(msg){
-    let dismissMsg = `\nClick here to dismiss`
-    errorMsg.style.display = "block";
-    errorMsg.innerText = msg + dismissMsg;
+    errorMsg.className = "show";
+    errorMsg.innerText = msg;
+    setTimeout(function(){ errorMsg.className = errorMsg.className.replace("show", ""); }, 3000);
 }
 
 function dissmissMsg(){
@@ -103,7 +102,7 @@ function checkDueDate(element){
 function checkReminderDate(element){
     if(element.value > dueDate.value || element.value < dateConverter(new Date())){
         
-        alert("You can only select date from Current Date to Due Date.");
+        showErrorMsg("You can only select date from Current Date to Due Date.");
         element.value = dateConverter(new Date());
     }
 }
@@ -119,8 +118,9 @@ function addNewTask(isNew){
     }
 
     if(categoryManipulated){
-        alert("Category Manipulated .. Reloading the page");
+        alert("Policy Violation .. Category Manipulated .. Taking you to Dashboard.");
         location.assign('dashboard.html');
+        return ;
     }
         
     if(validTitle && validContent)

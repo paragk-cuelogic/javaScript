@@ -18,6 +18,7 @@ let validUserName = false,
     let gender = document.getElementById('gender');
     let address = document.getElementById('address');
     let userImage = document.getElementById('userImage');
+    let errorMsg = document.getElementById('errorDiv');
 
     (function(){
         let user = sessionStorage.getItem('activeUser');
@@ -40,11 +41,13 @@ let validUserName = false,
         }
     })();
 
-function showErrorMsg(msg){
-    let dismissMsg = `\nClick here to dismiss`
-    errorMsg.style.display = "block";
-    errorMsg.innerText = msg + dismissMsg;
-}
+
+    function showErrorMsg(msg) {
+        errorMsg.className = "show";
+        errorMsg.innerText = msg;
+        setTimeout(function(){ errorMsg.className = errorMsg.className.replace("show", ""); }, 3000);
+      }
+
 
 function dissmissMsg(){
     errorMsg.style.display = "none";
@@ -65,6 +68,10 @@ function displayProfile(){
     address.value = userData.address;
     if(userData.userImage)
         userImage.src = userData.userImage;
+    let inputFields = document.getElementsByClassName('inputField');
+    for(let test = 0; test < inputFields.length; test++){
+        inputFields[test].style.backgroundColor = "white";
+    }
 }
 
 function setInputBackground(element, color){
@@ -100,7 +107,7 @@ function checkUserName(userName){
     if(userName.value == "users"){
         userName.value = "";
         setInputBackground(userName, false);
-        showErrorMsg("'users' Cannot a username")
+        showErrorMsg("'users' Cannot be a username")
         return;
     }
     
@@ -131,7 +138,7 @@ function checkEmail(email){
             if(users.emailId[userID] == email.value){
                 setInputBackground(email,false);
                 validEmail = false;
-                showErrorMsg("Email-ID already used.")
+                showErrorMsg("Email-ID already used.");
                 break;
             }else{
                 validEmail = true;
@@ -167,13 +174,15 @@ function confirmPassword(rePassword, password){
             validRepassword = true;
         }
         else{
+            showErrorMsg("Please Enter Same Password Again")
             setInputBackground(rePassword,false);
         }
             
     }else{
         setInputBackground(rePassword, false);
         rePassword.value = "";
-        alert("First Enter Password");
+        showErrorMsg("First Enter Password");
+        password.focus();
     }
 
 }
@@ -205,7 +214,7 @@ function signUp(isNew){
     if(validUserName && validEmail && validFirstname && validLastName && validPassword && validRepassword)
         profileHelper(isNew);
     else
-        alert('Fill All The Required Details'); 
+        showErrorMsg('Fill All The Required Details'); 
 }
 
 function profileHelper(isNew){
@@ -241,6 +250,7 @@ function profileHelper(isNew){
             localStorage.setItem('users', JSON.stringify(users));
         }
         localStorage.setItem(obj.userName, JSON.stringify(obj));
+        alert("Registration Successful..");
         location.assign('index.html');
     
     }else{
@@ -254,7 +264,7 @@ function profileHelper(isNew){
             userData.userImage = picture;
         localStorage.setItem(obj.userName, JSON.stringify(userData));
         alert("Profile Updated Successfully");
-        location.assign('dashboard.html');
+            location.assign('dashboard.html');
     }
 }
 
@@ -271,7 +281,7 @@ function UploadProfilePicture() {
         setImage(Image);
     }
     else if(!updating && Image == null){
-         signupImage = false
+         signupImage = false;
     }
 }
 
@@ -282,7 +292,7 @@ function setImage(Image){
     imagereader.onload = function () {
     let imgdata = imagereader.result;
     sessionStorage.setItem("displayPicture", imgdata);
-    document.getElementById("userImage").src = sessionStorage.displayPicture;
+        document.getElementById("userImage").src = sessionStorage.displayPicture;
     };
 
     imagereader.onerror = function (error) {   
@@ -290,13 +300,9 @@ function setImage(Image){
 }
 
 function resetSignupForm(){
-    console.log("reset clicked");
-    let inputFields = document.getElementsByClassName('inputField')
-    console.log(inputFields);
+    let inputFields = document.getElementsByClassName('inputField');
     for(let test = 0; test < inputFields.length; test++){
-        console.log(inputFields[test].style.backgroundColor);
         inputFields[test].style.backgroundColor = "white";
-        console.log("updated :"+inputFields[test].style.backgroundColor);
     }
     userImage.src = "../images/image.png";
 }

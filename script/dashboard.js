@@ -4,16 +4,39 @@
     if(userName == null)
         location.assign('index.html');
 
-    loadToDo();
-    let today = new Date();
     let userData = JSON.parse(localStorage.getItem(userName));
+    let userIDs = JSON.parse(localStorage.getItem('users'));
+    
+    if(!userData){
+        for(let userID = 0; userID < userIDs.userNames.length; userID++){
+            if(userIDs.userNames[userID] == userName){
+                userIDs.userNames.splice(userID,1);
+                userIDs.emailId.splice(userID,1);
+                localStorage.setItem('users',JSON.stringify(userIDs));
+                break;
+            }
+        }
+        sessionStorage.removeItem('activeUser');
+        location.assign('index.html');
+    }
+        
     if(userData.userImage)
         document.getElementById("userImage").src = userData.userImage;
 
+    loadToDo();
+    let today = new Date();
     today = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
     document.getElementById('toDate').value = today;
     document.getElementById('fromDate').value = today;
 })();
+
+
+function showErrorMsg(msg) {
+    let errorMsg = document.getElementById('errorDiv');
+    errorMsg.className = "show";
+    errorMsg.innerText = msg;
+    setTimeout(function(){ errorMsg.className = errorMsg.className.replace("show", ""); }, 3000);
+}
 
 function logout(){
     if(confirm(" Do You Want To Log Out ? ")){
@@ -35,6 +58,7 @@ function getToDo(){
 
 function loadToDo(){
     let todoList = getToDo();
+    showErrorMsg("Showing All");
     displayData(todoList, todoList.length, todoList.length);
 }
 
@@ -42,12 +66,17 @@ function search(search){
     let searchKey = search.value;
     let todo = getToDo();
     let searchArray = [];
-    for(let todoIndex = 0; todoIndex < todo.length; todoIndex++){
-        if((todo[todoIndex].task).search(searchKey) > -1 || (todo[todoIndex].title).search(searchKey) > -1)
-            searchArray.push(todo[todoIndex]);
-    }
+    if(searchKey){
+        for(let todoIndex = 0; todoIndex < todo.length; todoIndex++){
+            if((todo[todoIndex].task).search(searchKey) > -1 || (todo[todoIndex].title).search(searchKey) > -1)
+                searchArray.push(todo[todoIndex]);
+        }
+        showErrorMsg("search reult for "+searchKey);
+        displayData(searchArray, searchArray.length, todo.length);
+    }else
+        loadToDo();
 
-    displayData(searchArray, searchArray.length, todo.length);
+    
 }
 
 function categorySearch(search){
@@ -62,6 +91,7 @@ function categorySearch(search){
         if(todo[todoIndex].category == searchKey)
             searchArray.push(todo[todoIndex]);
     }
+    showErrorMsg("search reult for category : "+searchKey);
     search.options[0].selected = true;
     displayData(searchArray, searchArray.length, todo.length);
 }
@@ -82,6 +112,7 @@ function statusSearch(search){
         if(todo[todoIndex].status === status)
             searchArray.push(todo[todoIndex]);
     }
+    showErrorMsg("search reult for status : "+searchKey);
     search.options[0].selected = true;
     displayData(searchArray, searchArray.length, todo.length);
 }
@@ -106,6 +137,7 @@ function searchByDate(oldDate, newDate){
         if(date >= oldDate && date <= newDate)
             searchArray.push(todo[todoIndex]);
     }
+    showErrorMsg("showing from "+oldDate+" To "+newDate);
     displayData(searchArray, searchArray.length, todo.length);
 }
 
@@ -121,12 +153,16 @@ function markDone(element, reLoad){
             break;
         }
     }
-    if(reLoad)
+    if(reLoad){
         loadToDo();
+        showErrorMsg("marked as done");
+    }
+        
     document.getElementById('selectAll').checked = false;
 }
 
-function deleteTask(element, reLoad){
+
+function deleteTask(element, reLoad, single){
     let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     for(let todoIndex = 0; todoIndex < userData.todo.length; todoIndex++){
         if(userData.todo[todoIndex].id == element){
@@ -135,8 +171,10 @@ function deleteTask(element, reLoad){
             break;
         }
     }
-    if(reLoad)
+    if(reLoad){
         loadToDo();
+        showErrorMsg("deleted Successfully");
+    }
 
         document.getElementById('selectAll').checked = false;
 }
@@ -147,21 +185,51 @@ function batchOperation(markDone){
 }
 
 function batchMarkDone(){
+
     let  checklist = document.getElementsByName("selectToDo");
+    let flag = false;
     for(let item = 0; item < checklist.length; item++){
-        if(checklist[item].checked == true)
-            markDone(checklist[item].id, false);
+        if(checklist[item].checked == true){
+            flag = true;
+            break;
+        }
     }
-    loadToDo();
+
+    if(flag){
+        if(confirm("Do you want to \"Mark as Done\" selected?")){
+            for(let item = 0; item < checklist.length; item++){
+                if(checklist[item].checked == true)
+                markDone(checklist[item].id, false);
+        }
+        loadToDo();
+        showErrorMsg("marked as done items Successfully");
+        }
+    }else
+        showErrorMsg("Select Something first.");
 }
 
 function batchDelete(){
     let  checklist = document.getElementsByName("selectToDo");
-		for(let item = 0; item < checklist.length; item++){
-			if(checklist[item].checked == true)
-				deleteTask(checklist[item].id, false);
+    let flag = false;
+    for(let item = 0; item < checklist.length; item++){
+        if(checklist[item].checked == true){
+            flag = true;
+            break;
+        }
     }
-    loadToDo();
+
+    if(flag){
+        if(confirm("Do you want to \"Done\" selected?")){
+            for(let item = 0; item < checklist.length; item++){
+                if(checklist[item].checked == true)
+                    deleteTask(checklist[item].id, false);
+        }
+        loadToDo();
+        showErrorMsg("deleted selected items Successfully");
+        }
+    }else
+        showErrorMsg("Select Something to delete.");
+    
 }
 
 function markAll(element){
@@ -225,7 +293,7 @@ function displayData(todoList, result, total){
         dueDate.textContent = todoList[todoIndex].dueDate;
         let dueDateColor = new Date(todoList[todoIndex].dueDate)
         if(todoList[todoIndex].status < 0){
-            doneButton = "<button id="+todoList[todoIndex].id+" onclick=\"markDone(this.id, true)\" name=\"todoOption\" > Mark Done</button>";
+            doneButton = "<button id="+todoList[todoIndex].id+" onclick=\"markDone(this.id, true, true)\" name=\"todoOption\" > Mark Done</button>";
             editButton = "<button id="+todoList[todoIndex].id+" onclick=\"editTask(this.id)\" >Edit</button>";
             if(new Date() > dueDateColor)
                 status.style = "background-color:red";
@@ -241,7 +309,7 @@ function displayData(todoList, result, total){
         else
             publicTodo = "Public";
 
-        deleteButton = "<button id="+todoList[todoIndex].id+" onclick=\"deleteTask(this.id, true)\" >Delete</button>";
+        deleteButton = "<button id="+todoList[todoIndex].id+" onclick=\"deleteTask(this.id, true, true)\" >Delete</button>";
         
         isPublic.innerHTML = publicTodo;
             

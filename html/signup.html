@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/testStyle.css">
     <title>TO-DO</title>
 </head>
 <body>
-        <div id="errorDiv" onclick="dissmissMsg()" style="display: none;color: red; height: 40px; width: 500px; background-color: skyblue;padding: 20px; position: sticky; top: 0%; margin: auto;">
-            
-        </div>
+        <div id="errorDiv" ></div>
 <div class="container">
         <h1>TO-DO App</h1> <hr>
 <form NAME="signUP" action="" method="POST" autocomplete="off">
@@ -22,7 +21,7 @@
 
     <h2>User Registration Form</h2>
 
-        <input id="userName" class="inputField" type="text" placeholder="Enter User Name" name="userName" value="" onfocusout="checkUser(this)" required>
+        <input id="userName" class="inputField" type="text" placeholder="Enter User Name" name="userName" value="" onblur="checkUser(this)" required>
         <p id="hint userName">
             Need Help ? <br>
             Cannot Be Empty
@@ -31,14 +30,14 @@
         </p>
 
         <input id="email" class="inputField" type="email" placeholder="Enter Email-id" name="email" value=""  
-        onchange="checkUser(this)" required>
+        onblur="checkUser(this)" required>
         <p id="hint userName">
                 Need Help ? <br>
                 Enter Valid Email Address
         </p>
 
         <input id="password" class="inputField" type="password" placeholder="Enter Password" 
-        onchange="checkPassword(this, document.getElementById('Repassword'))" required>
+        onblur="checkPassword(this, document.getElementById('Repassword'))" required>
         <p id="hint userName">
                 Need Help ? <br>
                 Password Length must be minimum 8 Characters
@@ -47,14 +46,14 @@
         </p>
 
         <input id="Repassword" class="inputField" type="password" placeholder="Confirm Password" 
-        onchange="confirmPassword(this, document.getElementById('password'))"required>
+        onblur="confirmPassword(this, document.getElementById('password'))"required>
         <p id="hint userName">
             Need Help ? <br>
             Re-Enter Password
         </p>
 
         <input id="firstName" class="inputField" type="text" placeholder="Enter First Name" name="firstName" value="" 
-        onchange="checkFirstName(this)" required>
+        onblur="checkFirstName(this)" required>
         <p id="hint userName">
             Need Help ? <br>
             Enter 3-20 alphabates only
@@ -62,7 +61,7 @@
         </p>
         
         <input id="lastName" class="inputField" type="text" placeholder="Enter Last Name" name="lastName" value=""
-        onchange="checkLastName(this)" required>
+        onblur="checkLastName(this)" required>
         <p id="hint userName">
                 Need Help ? <br>
                 Enter 3-20 alphabates only
@@ -98,11 +97,11 @@
         <img id="userImage" alt="" width="100" height="100" src="../images/image.png" class="signup-img"/>
     <br>
         
-        <input type="button" id="signupButton" value="sigunUP" onclick="signUp(true)">
-        <input type="reset" id="resetButton" onclick="resetSignupForm()" value="Reset">
+        <button id="signupButton" value="sigunUP" onclick="signUp(true)">sign Up</button>
+        <button type="reset" id="resetButton" onclick="resetSignupForm()" value="Reset">Reset</button>
 
-        <input type="button" id="updateProfile" style="display: none;" onclick="signUp(false)" value="Update Profile">
-        <input type="button" id="resetProfile" style="display: none;" onclick="displayProfile()" value="Reset Details">
+        <button type="button" id="updateProfile" style="display: none;" onclick="signUp(false)" value="Update Profile">Update Profile</button>
+        <button type="button" id="resetProfile" style="display: none;" onclick="displayProfile()" value="Reset Details">Reset Details</button>
 
 </form>
 </div>
