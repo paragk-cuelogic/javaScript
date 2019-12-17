@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../css/testStyle.css">
+    <link rel="stylesheet" href="../css/global.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 <body>
+    <div id="errorDiv"></div>
     <div class="container">
         <h1>TO-DO App</h1>
         <p>Enter Email / UserID</p>
         <input id="email" type="text">
         <p>Enter Password</p>
         <input type="password" name="" id="password"> <br>
-        <br><input id="checkUserButton" type="button" value="Login" onclick="authenticateUser()">
+        <br><button id="checkUserButton" type="button" value="Login" style="padding: 10px 30px; border-radius: 10px;" onclick="authenticateUser()">Login</button>
 
-    <p><a href="signup.html" style="color: white;">Click Here to Sign-up</a></p>
+    <p style="color: white; margin-top: 20px;"><a style="color: white;" href="signup.html">Click Here to Sign-up</a></p>
     </div>
     <script src="../script/index.js"></script>
 </body>

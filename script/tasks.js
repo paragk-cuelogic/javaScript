@@ -12,7 +12,7 @@
     
 (function(){
     if(!sessionStorage.getItem('activeUser'))
-        location.assign('index.html');
+        location.replace('index.html');
     
     if(sessionStorage.getItem('editTask')){
         let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
@@ -162,6 +162,7 @@ function addTask(newTask){
         editIndex = -1;
         sessionStorage.removeItem('editTask');
     }
+    alert("saved successfully.");
     localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(userData));
     location.replace('dashboard.html');
 }

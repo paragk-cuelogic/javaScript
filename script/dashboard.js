@@ -130,13 +130,15 @@ function dateSearch(){
 }
 
 function searchByDate(oldDate, newDate){
-    let todo = getToDo();;
+    let todo = getToDo();
     let searchArray = [];
     for(let todoIndex = 0; todoIndex < todo.length; todoIndex++){
         let date = new Date(todo[todoIndex].dueDate)
         if(date >= oldDate && date <= newDate)
             searchArray.push(todo[todoIndex]);
     }
+    oldDate = oldDate.getFullYear() + '-' + ('0' + (oldDate.getMonth() + 1)).slice(-2) + '-' + ('0' + oldDate.getDate()).slice(-2);
+    newDate = newDate.getFullYear() + '-' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + ('0' + newDate.getDate()).slice(-2);
     showErrorMsg("showing from "+oldDate+" To "+newDate);
     displayData(searchArray, searchArray.length, todo.length);
 }

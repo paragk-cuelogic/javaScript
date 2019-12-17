@@ -11,9 +11,17 @@
 let email = document.getElementById("email");
 let password = document.getElementById('password');
 
+function showErrorMsg(msg) {
+    let errorMsg = document.getElementById('errorDiv');
+    errorMsg.className = "show";
+    errorMsg.innerText = msg;
+    setTimeout(function(){ errorMsg.className = errorMsg.className.replace("show", ""); }, 3000);
+}
+
+
 function authenticateUser(){
     if(email.value == ""){
-        alert("Please Enter Valid username or email.");
+        showErrorMsg("Enter Username/Email");
     }else
         checkUser();
 }
@@ -31,7 +39,7 @@ function checkUser(){
                     location.assign('dashboard.html');
                     break;
                 }else{
-                    alert("Wrong Password");
+                    showErrorMsg("Wrong Password");
                 }
             }
         }

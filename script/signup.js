@@ -251,7 +251,7 @@ function profileHelper(isNew){
         }
         localStorage.setItem(obj.userName, JSON.stringify(obj));
         alert("Registration Successful..");
-        location.assign('index.html');
+        location.replace('index.html');
     
     }else{
         let userData = JSON.parse(localStorage.getItem(userName.value))
@@ -263,8 +263,8 @@ function profileHelper(isNew){
         if(imageChanged)
             userData.userImage = picture;
         localStorage.setItem(obj.userName, JSON.stringify(userData));
+        location.assign('dashboard.html');
         alert("Profile Updated Successfully");
-            location.assign('dashboard.html');
     }
 }
 
@@ -304,5 +304,6 @@ function resetSignupForm(){
     for(let test = 0; test < inputFields.length; test++){
         inputFields[test].style.backgroundColor = "white";
     }
+    gender.options[0].selected = true;
     userImage.src = "../images/image.png";
 }
