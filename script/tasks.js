@@ -16,7 +16,7 @@
     
     if(sessionStorage.getItem('editTask')){
         let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-        saveButton.style = "display:block";
+        saveButton.style = "display:inline-block";
         addButton.style = "display:none";
 
         for(let i = 0; i < userData.todo.length; i++){
