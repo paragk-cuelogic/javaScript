@@ -19,15 +19,17 @@
         sessionStorage.removeItem('activeUser');
         location.assign('index.html');
     }
-        
+    let userImage = document.getElementById("userImage");
     if(userData.userImage)
-        document.getElementById("userImage").src = userData.userImage;
+        userImage.src = userData.userImage;
+    else if(userData.gender == "Male")
+        userImage.src = "../images/maleUser.png";
+    else if(userData.gender == "Female")
+        userImage.src = "../images/femaleUser.png";
 
     loadToDo();
-    let today = new Date();
-    today = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
-    document.getElementById('toDate').value = today;
-    document.getElementById('fromDate').value = today;
+    document.getElementById('toDate').value = dateConverter(new Date());
+    document.getElementById('fromDate').value = dateConverter(new Date());
 })();
 
 
@@ -49,6 +51,10 @@ function logout(){
 function editTask(id){ 
     sessionStorage.setItem('editTask',id);
     location.replace('task.html');
+}
+
+function dateConverter(date){
+    return ''+date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 }
 
 function getToDo(){
@@ -74,10 +80,9 @@ function search(search){
         showErrorMsg("search reult for "+searchKey);
         displayData(searchArray, searchArray.length, todo.length);
     }else
-        loadToDo();
-
-    
+        loadToDo();   
 }
+
 
 function categorySearch(search){
     let searchKey = search.value;
@@ -118,15 +123,22 @@ function statusSearch(search){
 }
 
 function dateSearch(){
-    let dateOne = new Date(document.getElementById('fromDate').value);
-    let dateTwo = new Date(document.getElementById('toDate').value);
-    let oldDate = dateOne;
-    let newDate = dateTwo;
-    if(dateOne > dateTwo){
+    let dateOne = document.getElementById('fromDate');
+    let dateTwo = document.getElementById('toDate');
+    if(dateOne.value == "" || dateTwo.value == "")
+    {
+        showErrorMsg("Must Set Both the dates");
+        dateOne.value = dateConverter(new Date());
+        dateTwo.value = dateConverter(new Date());
+        return;
+    }
+    let oldDate = dateOne.value;
+    let newDate = dateTwo.value;
+    if(dateOne.value > dateTwo.value){
         newDate = dateOne;
         oldDate = dateTwo;
     }
-    searchByDate(oldDate, newDate);
+    searchByDate(new Date(oldDate), new Date(newDate));
 }
 
 function searchByDate(oldDate, newDate){
@@ -137,8 +149,8 @@ function searchByDate(oldDate, newDate){
         if(date >= oldDate && date <= newDate)
             searchArray.push(todo[todoIndex]);
     }
-    oldDate = oldDate.getFullYear() + '-' + ('0' + (oldDate.getMonth() + 1)).slice(-2) + '-' + ('0' + oldDate.getDate()).slice(-2);
-    newDate = newDate.getFullYear() + '-' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + ('0' + newDate.getDate()).slice(-2);
+    oldDate = dateConverter(oldDate);
+    newDate = dateConverter(newDate);
     showErrorMsg("showing from "+oldDate+" To "+newDate);
     displayData(searchArray, searchArray.length, todo.length);
 }
