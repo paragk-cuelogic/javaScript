@@ -13,6 +13,7 @@
                 userIDs.userNames.splice(userID,1);
                 userIDs.emailId.splice(userID,1);
                 localStorage.setItem('users',JSON.stringify(userIDs));
+                alert("Something went wrong ... User Data is Deleted");
                 break;
             }
         }
