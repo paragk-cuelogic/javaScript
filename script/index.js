@@ -34,13 +34,21 @@ function checkUser(){
             if(accountHolders.emailId[userID] == email.value || accountHolders.userNames[userID] == email.value){
                 foundUser = true;
                 let userDetails = JSON.parse(localStorage.getItem(accountHolders.userNames[userID]));
-                if(userDetails.password == password.value){
-                    sessionStorage.setItem('activeUser',accountHolders.userNames[userID]);
-                    location.assign('dashboard.html');
-                    break;
+                if(userDetails){
+                    if(userDetails.password == password.value){
+                        sessionStorage.setItem('activeUser',accountHolders.userNames[userID]);
+                        location.assign('dashboard.html');
+                        break;
+                    }else{
+                        showErrorMsg("Wrong Password");
+                    }
                 }else{
-                    showErrorMsg("Wrong Password");
+                    alert("Something went wrong ... User Data is Deleted");
+                        accountHolders.userNames.splice(userID,1);
+                        accountHolders.emailId.splice(userID, 1);
+                        localStorage.setItem('users', JSON.stringify(accountHolders));
                 }
+                
             }
         }
         if(!foundUser)
