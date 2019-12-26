@@ -79,7 +79,7 @@ function search(search){
                 searchArray.push(todo[todoIndex]);
         }
         showErrorMsg("search reult for "+searchKey);
-        displayData(searchArray, searchArray.length, todo.length);
+        displayData(searchArray, searchArray.length, todo.length, true, searchKey);
     }else
         loadToDo();   
 }
@@ -257,7 +257,6 @@ function markAll(element){
     });
 }
 
-// For Content Display
 function showContent(element){
     if(element.name == "hiddenContent"){
         element.style = "height: auto; overflow: auto;"
@@ -268,15 +267,16 @@ function showContent(element){
     }
 }
 
-function displayData(todoList, result, total){
+function isRecordFound(result,total){
     if(result == 0)
         document.getElementById('noRecords').style.display = "block";
     else
         document.getElementById('noRecords').style.display = "none";
-    
-    let ul = document.querySelector("ul");
-    ul.innerHTML = "";
-    document.getElementById('todoCount').innerHTML = "Showing "+result+" out of "+total;
+
+        document.getElementById('todoCount').innerHTML = "Showing "+result+" out of "+total;
+}
+
+function showCategories(){
     let categories = ['All','Home','School','Market','Test'];
     let selectCategory = document.getElementById('catSearch');
     selectCategory.innerHTML = "<option value=\"Sel\" selected disabled>Select Category</option>";
@@ -286,9 +286,45 @@ function displayData(todoList, result, total){
         option.textContent = categories[category];
         selectCategory.appendChild(option);
     }
+}
+
+// Highlight the keywords inside the content area
+
+function testHighlight(arr, todocontent, key){
+    let p = document.createElement('p');
+    let startOfString = document.createElement('pre');
+    startOfString.setAttribute("style","color:white; margin:0px; padding:0px; width:auto; display:inline-block");
+    startOfString.innerHTML = todocontent.slice(0,arr[0]);
+    p.appendChild(startOfString);
+    let currentPosition = 0;
+        for(let i = 0; i < arr.length; i++){
+            let normalText = document.createElement('pre');
+            let searchKey = document.createElement('pre');
+            normalText.setAttribute("style","color:white; margin:0px; padding:0px; width:auto; display:inline-block");
+            searchKey.setAttribute("style","background-color:black; margin:0px; padding:0px; width:auto; display:inline-block");
+            searchKey.innerText = ''+todocontent.slice(arr[i], arr[i] + key.length);
+            p.appendChild(searchKey);
+            currentPosition = arr[i] + key.length;
+            normalText.innerText = ''+todocontent.slice(currentPosition, arr[i+1]);
+            p.appendChild(normalText);
+        }
+    return p;
+}
+
+function displayData(todoList, result, total, textSearch, searchKey){
+
+    isRecordFound(result,total);
+    showCategories();
+
+    let ul = document.querySelector("ul");
+    ul.innerHTML = "";
+
+    
+    
 
     ul = document.querySelector("ul");
-    for (let todoIndex = 0; todoIndex < todoList.length; todoIndex++) {
+    for ( let todoIndex = 0; todoIndex < todoList.length; todoIndex++ ) {
+        
         let editButton = "", deleteButton = "", doneButton = "";
         let listItem = document.createElement('li');  
         let checkbox = document.createElement('input');
@@ -307,6 +343,7 @@ function displayData(todoList, result, total){
 
         dueDate.textContent = todoList[todoIndex].dueDate;
         let dueDateColor = new Date(todoList[todoIndex].dueDate)
+        
         if(todoList[todoIndex].status < 0){
             doneButton = "<button id="+todoList[todoIndex].id+" onclick=\"markDone(this.id, true, true)\" name=\"todoOption\" > Mark Done</button>";
             editButton = "<button id="+todoList[todoIndex].id+" onclick=\"editTask(this.id)\" >Edit</button>";
@@ -325,14 +362,13 @@ function displayData(todoList, result, total){
             publicTodo = "Public";
 
         deleteButton = "<button id="+todoList[todoIndex].id+" onclick=\"deleteTask(this.id, true, true)\" >Delete</button>";
-        
         isPublic.innerHTML = publicTodo;
-            
         todoOption.innerHTML = editButton+""+doneButton+""+deleteButton;
         category.textContent = todoList[todoIndex].category;
         title.textContent = todoList[todoIndex].title;
         remind.textContent = todoList[todoIndex].reminderDate;
-        content.textContent = todoList[todoIndex].task;
+
+
         
         listItem.appendChild(checkbox);
         listItem.appendChild(status);
@@ -342,7 +378,27 @@ function displayData(todoList, result, total){
         listItem.appendChild(remind);
         listItem.appendChild(isPublic);
         listItem.appendChild(todoOption);
-        listItem.appendChild(content);
+
+        let todoContent = todoList[todoIndex].task;
+
+        if(textSearch && searchKey){
+            let re = new RegExp(searchKey,"g");
+            let current;
+            let matchIndexes = [];
+            while ((current = re.exec(todoContent)) != null)
+                matchIndexes.push(current.index);
+
+            if(matchIndexes){
+                let test = testHighlight(matchIndexes, todoContent, searchKey);
+                console.log(test)
+                listItem.appendChild(test);
+            }
+               
+        }else{
+            content.textContent = todoList[todoIndex].task;
+            listItem.appendChild(content);
+        }
+
         listItem.setAttribute("onclick","showContent(this)");
         listItem.setAttribute("name","hiddenContent");
         ul.appendChild(listItem);
